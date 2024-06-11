@@ -7,7 +7,22 @@ const features = platforms.reduce((acc, platform) => {
     return acc;
 }, {});
 
+
+// features = { github: ["feature1", "feature2"], leetcode: ["feature1", "feature2"] }
+// Function to get features for a specific platform
+const getPlatformFeatures = (platform) => {
+    return features[platform] || [];
+};
+
 const card = (UserName, platform) => {
+
+    const platformFeatures = getPlatformFeatures(platform);
+
+    const add_h3 = (id) => {
+        const h3 = document.querySelector(`#${id} h3`);
+        h3.innerHTML = `${platform.charAt(0).toUpperCase() + platform.slice(1)}`
+    }
+
     const cardIn = (id) => {
         const div = document.getElementById(`${id}`);
         div.style.display = 'flex';
@@ -76,10 +91,18 @@ const card = (UserName, platform) => {
             return user.json();
         })
         .then((data) => {
+            // h3 add krenge sbse pehle
+            add_h3(platform);
             console.log(data);
             cardIn(platform);
-            addImage(platform, data.avatar_url);
-            addAbout(platform, data.name, data.public_repos, 'Repositories(Public)');
+            platformFeatures.forEach(feature => {
+                if (feature === 'photo') {
+                    addImage(platform, data.avatar_url);
+                }
+                if (feature === 'about') {
+                    addAbout(platform, data.name, data.public_repos, 'Repositories(Public)');
+                }
+            });
         })
         .catch((error) => console.log(error));
 
@@ -90,7 +113,11 @@ const card = (UserName, platform) => {
         })
         .then((data) => {
             console.log(data);
-            addMore(platform, data.contributions.length, 'Contributions');
+            platformFeatures.forEach(feature => {
+                if (feature === 'contributions') {
+                    addMore(platform, data.contributions.length, 'Contributions');
+                }
+            });
         })
         .catch((error) => console.log(error));
     }
@@ -104,8 +131,14 @@ const card = (UserName, platform) => {
         .then((data) => {
             console.log(data);
             cardIn(platform);
-            addImage(platform, data.avatar);
-            addAbout(platform, data.name, data.ranking, 'Ranking');
+            platformFeatures.forEach(feature => {
+                if (feature === 'photo') {
+                    addImage(platform, data.avatar);
+                }
+                if (feature === 'about') {
+                    addAbout(platform, data.name, data.ranking, 'Ranking');
+                }
+            });
         })
         .catch((error) => console.log(error));
 
@@ -117,18 +150,15 @@ const card = (UserName, platform) => {
         })
         .then((data) => {
             console.log(data);
-            addMore(platform, data.solvedProblem, 'Problems Solved')
+            platformFeatures.forEach(feature => {
+                if (feature === 'problemsSolved') {
+                    addMore(platform, data.solvedProblem, 'Problems Solved');
+                }
+            });        
         })
         .catch((error) => console.log(error));
     }
 };
-
-if (platforms == 'github') {
-    card(usernames, 'github');
-}
-else if (platforms == 'leetcode') {
-    card(usernames, 'leetcode')
-}
 
 platforms.forEach((platform, index) => {
     const UserName = usernames[index];

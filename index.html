@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Peacock</title>
-    <link rel="stylesheet" href="/css/home.css">
+    <link rel="stylesheet" href="/css/platform.css">
 </head>
 <body>
     <header>
@@ -17,47 +17,22 @@
         </div>
     </header>
 
-    <hr>
 
     <main>
-        <div id="one">
-            <h3>Github</h3>
-            <div id="github">
-                <img alt="">
-                <div id="data">
-                    <h3></h3>
-                    <p></p>
-                    <p id="param1"></p>
-                    <p id="param2"></p>
-                </div>
-            </div>
+        <h3>Select Platforms</h3>
+        <form action="/view/features.html" method="get">
+        <div class="checkbox-wrapper-41">
+            <!-- <input type="checkbox"> -->
+            <input type="checkbox" name="platform" value="github"> GitHub<br>
+            <input type="checkbox" name="platform" value="leetcode"> LeetCode<br>
+            <!-- <input type="checkbox" name="platform" value="geeksforgeeks"> GeeksforGeeks<br>
+            <input type="checkbox" name="platform" value="hackerrank"> HackerRank<br> -->
+            <button type="submit">Next</button>
         </div>
+        </form>
 
-        <div id="two">
-            <h3>LeetCode</h3>
-            <div id="leetcode">
-                <img alt="">
-                <div id="data">
-                    <h3></h3>
-                    <p></p>
-                    <p id="param1"></p>
-                    <p id="param2"></p>
-                </div>
-            </div>
-        </div>
-        
-        <!-- <div id="three">
-            <h3>HackerRank</h3>
-            <div id="hackerRank">
-                <img alt="">
-                <div id="data">
-                    <h3></h3>
-                    <p></p>
-                    <p id="param1"></p>
-                    <p id="param2"></p>
-                </div>
-            </div>
-        </div> -->
+
+                    
     </main>
     <footer></footer>
 </body>

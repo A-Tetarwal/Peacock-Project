@@ -27,8 +27,14 @@
                 platforms.forEach(platform => {
                     document.write(`<h2>${platform.charAt(0).toUpperCase() + platform.slice(1)}</h2>`);
                     document.write('<input type="checkbox" name="features_' + platform + '" value="photo"> Photo<br>');
-                    document.write('<input type="checkbox" name="features_' + platform + '" value="name"> Name<br>');
-                    document.write('<input type="checkbox" name="features_' + platform + '" value="repos"> Repositories<br>');
+                    document.write('<input type="checkbox" name="features_' + platform + '" value="about"> About<br>');
+                    if (platform === 'github') {
+                        document.write('<input type="checkbox" name="features_' + platform + '" value="contributions"> Contributions<br>');
+                    }
+                    else if (platform === 'leetcode') {
+                        document.write('<input type="checkbox" name="features_' + platform + '" value="problemsSolved"> Problems Solved<br>');
+                    }
+                    // document.write('<input type="checkbox" name="features_' + platform + '" value="contributions"> Contributions<br>');
                     document.write('<br>');
                     document.write('<input type="hidden" name="platforms" value="' + platform + '">');
                 });

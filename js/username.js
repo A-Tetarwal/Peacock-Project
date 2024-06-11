@@ -5,6 +5,6 @@
             event.preventDefault(); // Prevent default form submission
             const formData = new FormData(form);
             const queryString = new URLSearchParams(formData).toString();
-            window.location.href = '../index2.html?' + queryString;
+            window.location.href = '/view/home.html?' + queryString;
         });
     });
