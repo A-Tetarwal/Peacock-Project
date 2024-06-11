@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Peacock</title>
+    <link rel="stylesheet" href="/css/features.css">
+</head>
+<body>
+    <header>
+        <div id="imagi">
+            <img src="/images/peacock 2.svg" alt="peacock project">
+        </div>
+        <div id="headText">
+            <h1>Peacock</h1>
+            <h4>The Portfolio Hacks</h4>
+        </div>
+    </header>
+
+    <main>
+        <h1>Select Features</h1>
+        <form action="username.html" method="get">
+            <script>
+                const params = new URLSearchParams(window.location.search);
+                const platforms = params.getAll('platform');
+    
+                platforms.forEach(platform => {
+                    document.write(`<h2>${platform.charAt(0).toUpperCase() + platform.slice(1)}</h2>`);
+                    document.write('<input type="checkbox" name="features_' + platform + '" value="photo"> Photo<br>');
+                    document.write('<input type="checkbox" name="features_' + platform + '" value="name"> Name<br>');
+                    document.write('<input type="checkbox" name="features_' + platform + '" value="repos"> Repositories<br>');
+                    document.write('<br>');
+                    document.write('<input type="hidden" name="platforms" value="' + platform + '">');
+                });
+            </script>
+            <button type="submit">Next</button>
+        </form>
+    
+    </main>
+    <footer></footer>
+</body>
+<script src="/js/features.js"></script>
+</html>

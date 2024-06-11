@@ -1,0 +1,107 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+html , body{
+    height: 100%;
+    width: 100%;
+
+    background-color: black;
+    color: white;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+header {
+    background-color: black;
+    color: white;
+    border-bottom: 1px rgb(50, 50, 50) solid;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#imagi {
+    width: 200px;
+}
+
+main {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+
+    margin-top: 10px;
+}
+
+/* form here */
+form {
+    border: 1px rgb(255, 255, 255) solid;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 10px;
+}
+
+/* checkboxes here */
+ 
+.checkbox-wrapper-41 {
+    --size: 30px;
+  }
+
+  .checkbox-wrapper-41 input[type="checkbox"] {
+    -webkit-appearance: none;
+    width: var(--size);
+    height: calc(var(--size) / 2);
+    background-color: #000000;
+    border: 1.5px solid #1a6cc0;
+    border-radius: 30px 100px 100px 100px;
+    box-shadow: 0 10px 20px rgb(26, 108, 192);
+    outline: none;  
+    cursor: pointer;
+    position: relative;
+    transition: all 0.5s;
+  }
+
+  .checkbox-wrapper-41 input[type="checkbox"]::before {
+    content: "";
+    position: absolute;
+    width: calc(var(--size) / 2);
+    height: calc(var(--size) / 2.25);
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%) scale(0.7);
+    border: 3px solid rgb(26, 108, 192);
+    border-radius: 30px 100px 100px 100px;
+    background-color: rgb(26, 108, 192);
+    box-sizing: border-box;
+    transition: all 0.5s;
+  }
+
+  .checkbox-wrapper-41 input[type="checkbox"]:checked {
+    background-color: #1a6cc0;
+    border-radius: 100px 100px 30px 100px;
+  }
+
+  .checkbox-wrapper-41 input[type="checkbox"]:checked::before {
+    left: 50%;
+    background-color: #fff;
+    border-radius: 100px 100px 30px 100px;
+  }
+
+/* button here */
+button {
+    background-color: #000000;
+    border: none;
+    color: white;
+    padding: 8px;
+    border: 2px solid #1a6cc0;
+    border-radius: 20px;
+    margin-top: 10px;
+}
+
+button:hover {
+    cursor: pointer;
+    border: 2px #1a6cc0 solid;
+    background-color: #1a6cc0;
+}

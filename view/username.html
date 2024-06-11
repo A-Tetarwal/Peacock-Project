@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Peacock</title>
+    <link rel="stylesheet" href="/css/username.css">
+</head>
+<body>
+    <header>
+        <div id="imagi">
+            <img src="/images/peacock 2.svg" alt="peacock project">
+        </div>
+        <div id="headText">
+            <h1>Peacock</h1>
+            <h4>The Portfolio Hacks</h4>
+        </div>
+    </header>
+
+    <hr>
+
+    <main>
+        <h1>Enter Usernames</h1>
+        <form action="submit.html" method="post">
+            <script>
+                const params = new URLSearchParams(window.location.search);
+                const platforms = params.getAll('platforms');
+    
+                platforms.forEach(platform => {
+                    document.write(`<label for="${platform}_username">${platform} Username:</label>`);
+                    document.write(`<input type="text" id="${platform}_username" name="${platform}_username"><br>`);
+                });
+
+                // Append features and platforms to the form as hidden inputs
+                params.forEach((value, key) => {
+                    if (!key.endsWith('_username')) {
+                        document.write(`<input type="hidden" name="${key}" value="${value}">`);
+                    }
+                });
+            </script>
+            <button type="submit">Submit</button>
+        </form>
+    
+    </main>
+    <footer></footer>
+</body>
+<script src="/js/username.js"></script>
+</html>
