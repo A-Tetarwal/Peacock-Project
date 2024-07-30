@@ -1,4 +1,3 @@
-const { name } = require('ejs');
 const express = require('express');
 const path = require('path');
 const session = require('express-session');
@@ -35,10 +34,22 @@ app.get('/main', (req, res) => {
   res.render('main', { name });
 });
 
+app.get('/forefront', (req, res) => {
+  res.render('forefront');
+});
+
+app.post('/forefront', (req, res) => {
+  req.session.formData = req.body;
+  res.redirect('builder');
+});
+
 app.get('/builder', (req, res) => {
-  res.render('builder', { name });
+  console.log(req.session.formData);
+  res.render('builder', { formData: req.session.formData });
 });
 
 // Export the app for Vercel
 module.exports = app;
 module.exports.handler = serverless(app);
+
+app.listen(port, () => console.log(`server running on port ${port}`))

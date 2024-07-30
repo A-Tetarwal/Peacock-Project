@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Builder Form</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom styles for radio */
+        input[type="radio"] {
+            appearance: none;
+            background-color: #5a5a5a;
+            border: 1.5px solid #d1d5db;
+            /* gray-300 */
+            padding: 0.5rem;
+            border-radius: 50%;
+            /* rounded */
+            display: inline-block;
+            position: relative;
+        }
+
+        input[type="radio"]:checked {
+            background-color: #3b82f6;
+            /* blue-500 */
+            border-color: #3b82f6;
+            /* blue-500 */
+        }
+
+        input[type="radio"]:checked::after {
+            content: '\2713';
+            font-size: 1rem;
+            color: #fff;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        input[type="radio"]:hover {
+            border-color: #ffffff;
+            /* blue-500 */
+        }
+
+        /* Custom styles for checkboxes */
+        input[type="checkbox"] {
+            appearance: none;
+            background-color: #5a5a5a;
+            border: 1.5px solid #d1d5db;
+            /* gray-300 */
+            padding: 0.5rem;
+            border-radius: 5px;
+            /* rounded */
+            display: inline-block;
+            position: relative;
+        }
+
+        input[type="checkbox"]:checked {
+            background-color: #3b82f6;
+            /* blue-500 */
+            border-color: #3b82f6;
+            /* blue-500 */
+        }
+
+        input[type="checkbox"]:checked::after {
+            content: '\2713';
+            font-size: 1rem;
+            color: #fff;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        input[type="checkbox"]:hover {
+            border-color: #ffffff;
+            /* blue-500 */
+        }
+    </style>
+</head>
+
+<body class="bg-zinc-900 text-white flex items-center justify-center min-h-screen">
+    <form action="/forefront" method="post" class="bg-zinc-800 p-6 rounded shadow-md w-full max-w-md">
+        <h2 class="text-2xl font-bold mb-6">Portfolio Builder Form</h2>
+        <div class="mb-4">
+            <label class="block text-white mb-2">Do you have projects?</label>
+            <div class="flex items-center space-x-4">
+                <label class="flex items-center">
+                    <input type="radio" id="projects-yes" name="have-projects" onclick="toggleProjects()" class="mt-1">
+                    <span class="ml-2">Yes</span>
+                </label>
+                <label class="flex items-center">
+                    <input type="radio" id="projects-no" name="have-projects" onclick="toggleProjects()" class="mt-1">
+                    <span class="ml-2">No</span>
+                </label>
+            </div>
+        </div>
+        <div id="projects-section" class="mb-4 hidden">
+            <label for="num-projects" class="block text-white mb-2">How many projects?</label>
+            <input type="number" id="num-projects" name="num-projects" min="1"
+                class="mt-1 block w-full px-3 py-2 border border-gray-600 focus:border-gray-400 rounded-md shadow-sm bg-zinc-700 outline-none"
+                placeholder="Number of Project to include">
+        </div>
+        <div class="mb-4">
+            <label class="block text-white mb-2">Have you done internships?</label>
+            <div class="flex items-center space-x-4">
+                <label class="flex items-center">
+                    <input type="radio" id="internships-yes" name="have-internships" onclick="toggleInternships()"
+                        class="mt-1">
+                    <span class="ml-2">Yes</span>
+                </label>
+                <label class="flex items-center">
+                    <input type="radio" id="internships-no" name="have-internships" onclick="toggleInternships()"
+                        class="mt-1">
+                    <span class="ml-2">No</span>
+                </label>
+            </div>
+        </div>
+        <div id="internships-section" class="mb-4 hidden">
+            <label for="num-internships" class="block text-white mb-2">Number of internships:</label>
+            <input type="number" id="num-internships" name="num-internships" min="1"
+                class="mt-1 block w-full px-3 py-2 border border-gray-600 focus:border-gray-400 rounded-md shadow-sm bg-zinc-700 outline-none"
+                placeholder="Number of internships">
+        </div>
+        <div class="mb-6">
+            <label class="block text-white mb-2">Do you want to include links such as GitHub, LeetCode, HackerRank,
+                LinkedIn, etc.?</label>
+            <div class="flex items-center space-x-4">
+                <label class="flex items-center">
+                    <input type="radio" id="links-yes" name="include-links" onclick="toggleLinks()" class="mt-1">
+                    <span class="ml-2">Yes</span>
+                </label>
+                <label class="flex items-center">
+                    <input type="radio" id="links-no" name="include-links" onclick="toggleLinks()" class="mt-1">
+                    <span class="ml-2">No</span>
+                </label>
+            </div>
+        </div>
+        <div id="links-section" class="mb-4 hidden">
+            <label class="block text-white mb-2">Select the platforms you want to include:</label>
+            <div class="space-y-2">
+                <label class="flex items-center">
+                    <input type="checkbox" name="platforms[]" value="GitHub" class="mt-1">
+                    <span class="ml-2">GitHub</span>
+                </label>
+                <label class="flex items-center">
+                    <input type="checkbox" name="platforms[]" value="LinkedIn" class="mt-1">
+                    <span class="ml-2">LinkedIn</span>
+                </label>
+                <label class="flex items-center">
+                    <input type="checkbox" name="platforms[]" value="LeetCode" class="mt-1">
+                    <span class="ml-2">LeetCode</span>
+                </label>
+                <label class="flex items-center">
+                    <input type="checkbox" name="platforms[]" value="HackerRank" class="mt-1">
+                    <span class="ml-2">HackerRank</span>
+                </label>
+                <label class="flex items-center">
+                    <input type="checkbox" name="platforms[]" value="CodeChef" class="mt-1">
+                    <span class="ml-2">CodeChef</span>
+                </label>
+                <label class="flex items-center">
+                    <input type="checkbox" name="platforms[]" value="Codeforces" class="mt-1">
+                    <span class="ml-2">Codeforces</span>
+                </label>
+                <label class="flex items-center">
+                    <input type="checkbox" name="platforms[]" value="Other" class="mt-1">
+                    <span class="ml-2">Other</span>
+                </label>
+            </div>
+        </div>
+        <button type="submit" class="w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">Submit</button>
+    </form>
+
+    <script>
+        function toggleProjects() {
+            var projectsSection = document.getElementById("projects-section");
+            projectsSection.style.display = document.getElementById("projects-yes").checked ? "block" : "none";
+            var numProjectsInput = document.getElementById("num-projects");
+            if (document.getElementById("projects-yes").checked) {
+                numProjectsInput.setAttribute("required", true);
+            } else {
+                numProjectsInput.removeAttribute("required");
+            }
+        }
+
+        function toggleInternships() {
+            var internshipsSection = document.getElementById("internships-section");
+            internshipsSection.style.display = document.getElementById("internships-yes").checked ? "block" : "none";
+            var numInternshipsInput = document.getElementById("num-internships");
+            if (document.getElementById("internships-yes").checked) {
+                numInternshipsInput.setAttribute("required", true);
+            } else {
+                numInternshipsInput.removeAttribute("required");
+            }
+        }
+
+
+        function toggleLinks() {
+            var linksSection = document.getElementById("links-section");
+            linksSection.style.display = document.getElementById("links-yes").checked ? "block" : "none";
+        }
+        const form = document.querySelector('form');
+        form.addEventListener('submit', (e) => {
+            console.log('Form submitted!');
+            // You can also prevent the default form submission behavior if needed
+            // e.preventDefault();
+        });
+
+    </script>
+</body>
+
+</html>

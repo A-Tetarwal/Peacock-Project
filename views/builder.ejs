@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,24 +8,152 @@
     <link rel="stylesheet" href="/stylesheets/index.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        .peacock{
-            box-shadow: inset 0px 0px 10px #484848;
+        .peacock  {
+            box-shadow:inset 0px 0px 10px #333333;
         }
-        .peacockk{
+
+        .peacockk {
             transition: transform 0.2s ease-in-out;
         }
-        .peacockk:hover{
+
+        .peacockk:hover {
             transform: scale(1.1);
         }
     </style>
 </head>
-<body class="bg-zinc-900 text-white flex flex-col items-center justify-center gap-2">
-    <h1 class="text-2xl font-bold m-4">Peacock Welcomes you, <%= name %></h1>
-    <div class="main bg-zinc-800 peacockk border border-zinc-600 rounded-lg">
-        <a class="builder gap-0 flex flex-col" href="/builder">
-            <img src="/images/peacock 2.svg" alt="Peacock" class="peacock rounded-t-lg">
-            <p class="border-t border-zinc-600 px-3 py-2 text-lg font-semibold peacock rounded-b-lg">Create Portfolio</p>
-        </a>
-    </div>
+
+<body class="bg-zinc-900 text-white px-10 py-4">
+    <h1 class="text-2xl font-bold m-4 border-b-2 border-yellow-600 w-72">Please fill these details</h1>
+    <form class="flex flex-col gap-4">
+        <!-- main -->
+        <div class="main flex flex-col gap-4">
+            <fieldset class="p-4 rounded text-sm peacock bg-zinc-800">
+                <legend class="font-bold text-sm px-1.5 py-1 bg-green-600 rounded-lg">About</legend>
+                <div class="flex items-center gap-2">
+                    <label for="name" class="text-sm">Name</label>
+                    <input type="text" id="name" name="name" placeholder="Enter your full name"
+                        class="w-72 bg-zinc-700 text-gray-400 px-3 py-2 border border-zinc-600 rounded-lg focus:outline-none focus:border-zinc-400">
+                    <label for="about" class="text-sm">About</label>
+                    <textarea id="about" name="about" placeholder="What describes you best?"
+                        class="resize-none w-full bg-zinc-700 text-gray-400 px-3 py-2 border border-zinc-600 rounded-lg focus:outline-none focus:border-zinc-400"></textarea>
+                </div>
+            </fieldset>
+            <fieldset class="p-4 rounded text-sm peacock bg-zinc-800">
+                <legend class="font-bold text-sm px-1.5 py-1 bg-green-600 rounded-lg">Education</legend>
+                <div class="flex items-center gap-2">
+                    <label for="institution" class="text-sm">Institution (Graduation)</label>
+                    <input type="text" id="institution" name="institution" placeholder="Name of the institution"
+                        class="w-72 bg-zinc-700 text-gray-400 px-3 py-2 border border-zinc-600 rounded-lg focus:outline-none focus:border-zinc-400">
+                    <label for="degree" class="text-sm">Grades</label>
+                    <input type="number" id="degree" name="degree" placeholder="Grades"
+                        class="w-72 bg-zinc-700 text-gray-400 px-3 py-2 border border-zinc-600 rounded-lg focus:outline-none focus:border-zinc-400">
+                </div>
+            </fieldset>
+        </div>
+
+        <!-- gap -->
+        <div class="border-b border-zinc-800 mb-5 pb-5"></div>
+
+
+        <!-- Technical Skills -->
+        <div class="">
+            <fieldset class="p-4 rounded text-sm peacock bg-zinc-800 flex flex-col gap-2">
+                <legend class="font-bold text-sm px-1.5 py-1 bg-green-600 rounded-lg">Technical Skills</legend>
+                <div class="flex items-center gap-2">
+                    <label for="skill" class="text-sm">Skill</label>
+                    <input type="text" id="skill" name="skill" placeholder="Enter skill"
+                        class="w-72 bg-zinc-700 text-gray-400 px-3 py-2 border border-zinc-600 rounded-lg focus:outline-none focus:border-zinc-400">
+                    <label for="proficiency" class="text-sm">Proficiency</label>
+                    <input type="number" id="proficiency" name="proficiency" placeholder="Proficiency (out of 10)"
+                        class="w-72 bg-zinc-700 text-gray-400 px-3 py-2 border border-zinc-600 rounded-lg focus:outline-none focus:border-zinc-400">
+                </div>
+            </fieldset>
+        </div>
+
+        <!-- gap -->
+        <div class="border-b border-zinc-800 mb-5 pb-5"></div>
+
+
+        <!-- Achievements -->
+        <div class="">
+            <fieldset class="p-4 rounded text-sm peacock bg-zinc-800 flex flex-col gap-2">
+                <legend class="font-bold text-sm px-1.5 py-1 bg-green-600 rounded-lg">Achievements</legend>
+                <div class="flex items-center gap-2">
+                    <label for="achievement" class="text-sm">Achievement</label>
+                    <input type="text" id="achievement" name="achievement" placeholder="Enter achievement"
+                        class="w-72 bg-zinc-700 text-gray-400 px-3 py-2 border border-zinc-600 rounded-lg focus:outline-none focus:border-zinc-400">
+                    <label for="description" class="text-sm">Description</label>
+                    <textarea id="description" name="description" placeholder="Tell more about it"
+                        class="resize-none w-full bg-zinc-700 text-gray-400 px-3 py-2 border border-zinc-600 rounded-lg focus:outline-none focus:border-zinc-400"></textarea>
+                </div>
+            </fieldset>
+        </div>
+
+        <!-- gap -->
+        <div class="border-b border-zinc-800 mb-5 pb-5"></div>
+
+        <!-- Projects -->
+        <% for(let i=1; i <=formData['num-projects']; i++){ %>
+            <fieldset class="p-4 rounded text-sm peacock bg-zinc-800 flex flex-col gap-2">
+                <legend class="font-bold text-sm px-1.5 py-1 bg-green-600 rounded-lg">Project <%= i %>
+                </legend>
+                <div class="flex items-center gap-2">
+                    <label for="projectName_<%= i %>" class="text-sm">Name</label>
+                    <input type="text" id="projectName_<%= i %>" name="projectName_<%= i %>"
+                        placeholder="Enter project name"
+                        class="w-72 bg-zinc-700 text-gray-400 px-3 py-2 border border-zinc-600 rounded-lg focus:outline-none focus:border-zinc-400">
+                    <label for="projectAbout_<%= i %>" class="text-sm">About</label>
+                    <textarea id="projectAbout_<%= i %>" name="projectAbout_<%= i %>"
+                        placeholder="Describe your project"
+                        class="resize-none w-full bg-zinc-700 text-gray-400 px-3 py-2 border border-zinc-600 rounded-lg focus:outline-none focus:border-zinc-400"></textarea>
+                </div>
+                <div class="links flex items-center gap-2">
+                    <label for="githublink_<%= i %>" class="text-sm">Repo Link</label>
+                    <input type="text" id="githublink_<%= i %>" name="githublink_<%= i %>"
+                        placeholder="Enter GitHub link"
+                        class="w-72 bg-zinc-700 text-gray-400 px-3 py-2 border border-zinc-600 rounded-lg focus:outline-none focus:border-zinc-400">
+                    <label for="demo_<%= i %>" class="text-sm">Demo</label>
+                    <input type="text" id="demo_<%= i %>" name="demo_<%= i %>" placeholder="Demo Link (if any)"
+                        class="w-72 bg-zinc-700 text-gray-400 px-3 py-2 border border-zinc-600 rounded-lg focus:outline-none focus:border-zinc-400">
+                </div>
+            </fieldset>
+            <% } %>
+
+            <!-- gap -->
+            <div class="border-b border-zinc-800 mb-5 pb-5"></div>
+
+            <!-- Internships -->
+            <% for(let i=1; i <=formData['num-internships']; i++){ %>
+                <fieldset class="p-4 rounded text-sm peacock bg-zinc-800 flex flex-col gap-2">
+                    <legend class="font-bold text-sm px-1.5 py-1 bg-green-600 rounded-lg">Internship <%= i %>
+                    </legend>
+                    <div class="flex items-center gap-2">
+                        <label for="internshipCompany_<%= i %>" class="text-sm">Company Name</label>
+                        <input type="text" id="internshipCompany_<%= i %>" name="internshipCompany_<%= i %>"
+                            placeholder="Enter company name"
+                            class="w-72 bg-zinc-700 text-gray-400 px-3 py-2 border border-zinc-600 rounded-lg focus:outline-none focus:border-zinc-400">
+                        <label for="internshipDuration_<%= i %>" class="text-sm">Duration</label>
+                        <input type="text" id="internshipDuration_<%= i %>" name="internshipDuration_<%= i %>"
+                            placeholder="Enter duration (e.g., 6 months)"
+                            class="w-72 bg-zinc-700 text-gray-400 px-3 py-2 border border-zinc-600 rounded-lg focus:outline-none focus:border-zinc-400">
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <label for="internshipSkills_<%= i %>" class="text-sm">Skills Used</label>
+                        <input type="text" id="internshipSkills_<%= i %>" name="internshipSkills_<%= i %>"
+                            placeholder="Enter skills used (e.g., HTML, CSS, JavaScript)"
+                            class="w-72 bg-zinc-700 text-gray-400 px-3 py-2 border border-zinc-600 rounded-lg focus:outline-none focus:border-zinc-400">
+                        <label for="internshipCertificate_<%= i %>" class="text-sm">Certificate Link</label>
+                        <input type="text" id="internshipCertificate_<%= i %>" name="internshipCertificate_<%= i %>"
+                            placeholder="Enter certificate link (if any)"
+                            class="w-72 bg-zinc-700 text-gray-400 px-3 py-2 border border-zinc-600 rounded-lg focus:outline-none focus:border-zinc-400">
+                    </div>
+                </fieldset>
+            <% } %>
+    </form>
+
+    <footer>
+        <h5 class="text-center">&copy; Peacock</h5>
+    </footer>
 </body>
+
 </html>
