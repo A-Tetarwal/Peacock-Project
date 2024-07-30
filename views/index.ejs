@@ -4,15 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Peacock</title>
+    <link rel="icon" href= "/images/Peacock 2.svg"/>
     <link rel="stylesheet" href="/stylesheets/index.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         .peacock{
             box-shadow: inset 0px 0px 10px #484848;
         }
+        .header {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
     </style>
 </head>
-<body class="bg-zinc-900 text-white flex flex-col items-center justify-center gap-2">
+<body class="bg-zinc-900 text-white flex flex-col items-center gap-2">
+    <div class="header flex flex-row justify-between items-center w-full mb-4 border-b border-zinc-700 px-4 py-4 bg-zinc-900">
+        <a id="header" class="flex flex-row justify-center items-center hover:none" href="/home">
+            <img src="/images/Peacock 2.svg" alt="Binora Pre" class="w-12 h-12 mr-4 rounded-lg pt-1 bg-zinc-800">
+            <h1 class="text-4xl font-bold">Peacock</h1>
+        </a>
+    </div>
     <form action="/name" method="post" class="flex flex-col justify-center">
         <img src="/images/peacock 2.svg" alt="" class="rounded-t-lg pt-1 peacock border border-zinc-600">
         <!-- <label for="name">Enter name</label> -->
