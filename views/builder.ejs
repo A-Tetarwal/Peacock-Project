@@ -17,7 +17,8 @@
         }
 
         .peacockk:hover {
-            transform: scale(1.1);
+            transform: scale(1.01);
+            box-shadow:2.5px 2.5px 0px 0px #505050;
         }
     </style>
 </head>
@@ -27,7 +28,7 @@
     <form class="flex flex-col gap-4">
         <!-- main -->
         <div class="main flex flex-col gap-4">
-            <fieldset class="p-4 rounded text-sm peacock bg-zinc-800">
+            <fieldset class="p-4 rounded text-sm peacock peacockk bg-zinc-800">
                 <legend class="font-bold text-sm px-1.5 py-1 bg-green-600 rounded-lg">About</legend>
                 <div class="flex items-center gap-2">
                     <label for="name" class="text-sm">Name</label>
@@ -38,7 +39,7 @@
                         class="resize-none w-full bg-zinc-700 text-gray-400 px-3 py-2 border border-zinc-600 rounded-lg focus:outline-none focus:border-zinc-400"></textarea>
                 </div>
             </fieldset>
-            <fieldset class="p-4 rounded text-sm peacock bg-zinc-800">
+            <fieldset class="p-4 rounded text-sm peacock peacockk bg-zinc-800">
                 <legend class="font-bold text-sm px-1.5 py-1 bg-green-600 rounded-lg">Education</legend>
                 <div class="flex items-center gap-2">
                     <label for="institution" class="text-sm">Institution (Graduation)</label>
@@ -57,7 +58,7 @@
 
         <!-- Technical Skills -->
         <div class="">
-            <fieldset class="p-4 rounded text-sm peacock bg-zinc-800 flex flex-col gap-2">
+            <fieldset class="p-4 rounded text-sm peacock peacockk bg-zinc-800 flex flex-col gap-2">
                 <legend class="font-bold text-sm px-1.5 py-1 bg-green-600 rounded-lg">Technical Skills</legend>
                 <div class="flex items-center gap-2">
                     <label for="skill" class="text-sm">Skill</label>
@@ -76,7 +77,7 @@
 
         <!-- Achievements -->
         <div class="">
-            <fieldset class="p-4 rounded text-sm peacock bg-zinc-800 flex flex-col gap-2">
+            <fieldset class="p-4 rounded text-sm peacock peacockk bg-zinc-800 flex flex-col gap-2">
                 <legend class="font-bold text-sm px-1.5 py-1 bg-green-600 rounded-lg">Achievements</legend>
                 <div class="flex items-center gap-2">
                     <label for="achievement" class="text-sm">Achievement</label>
@@ -94,7 +95,7 @@
 
         <!-- Projects -->
         <% for(let i=1; i <=formData['num-projects']; i++){ %>
-            <fieldset class="p-4 rounded text-sm peacock bg-zinc-800 flex flex-col gap-2">
+            <fieldset class="p-4 rounded text-sm peacock peacockk bg-zinc-800 flex flex-col gap-2">
                 <legend class="font-bold text-sm px-1.5 py-1 bg-green-600 rounded-lg">Project <%= i %>
                 </legend>
                 <div class="flex items-center gap-2">
@@ -124,7 +125,7 @@
 
             <!-- Internships -->
             <% for(let i=1; i <=formData['num-internships']; i++){ %>
-                <fieldset class="p-4 rounded text-sm peacock bg-zinc-800 flex flex-col gap-2">
+                <fieldset class="p-4 rounded text-sm peacock peacockk bg-zinc-800 flex flex-col gap-2">
                     <legend class="font-bold text-sm px-1.5 py-1 bg-green-600 rounded-lg">Internship <%= i %>
                     </legend>
                     <div class="flex items-center gap-2">
@@ -149,11 +150,41 @@
                     </div>
                 </fieldset>
             <% } %>
+
+            <!-- gap -->
+            <div class="border-b border-zinc-800 mb-5 pb-5"></div>
+
+            <!-- Platforms -->
+            <% formData.platforms.forEach(platform => { %>
+                <fieldset class="p-4 rounded text-sm peacock peacockk bg-zinc-800 flex flex-col gap-2">
+                    <legend class="font-bold text-sm px-1.5 py-1 bg-green-600 rounded-lg"><%= platform %>
+                    </legend>
+                    <div class="flex items-center gap-2">
+                        <label for="email" class="text-sm"><%= platform %></label>
+                        <input type="text" id="email" name="email"
+                            placeholder="Enter username for <%= platform %>"
+                            class="w-72 bg-zinc-700 text-gray-400 px-3 py-2 border border-zinc-600 rounded-lg focus:outline-none focus:border-zinc-400">
+                    </div>
+                </fieldset>
+            <% }); %>
+
+            <!-- gap -->
+            <div class="border-b border-zinc-800 mb-5 pb-5"></div>
+
+            <fieldset class="p-4 rounded text-sm peacock peacockk bg-zinc-800 flex flex-col gap-2">
+                <legend class="font-bold text-sm px-1.5 py-1 bg-green-600 rounded-lg">Contact
+                </legend>
+                <div class="flex items-center gap-2">
+                    <label for="email" class="text-sm">Email</label>
+                    <input type="email" id="email" name="email"
+                        placeholder="Enter your email"
+                        class="w-72 bg-zinc-700 text-gray-400 px-3 py-2 border border-zinc-600 rounded-lg focus:outline-none focus:border-zinc-400">
+                </div>
+            </fieldset>
     </form>
 
-    <footer>
-        <h5 class="text-center">&copy; Peacock</h5>
-    </footer>
+    <!-- footer -->
+    <h5 class="flex flex-col justify-center items-center px-4.5 py-3">&copy; Peacock</h5>
 </body>
 
 </html>
