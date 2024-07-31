@@ -20,12 +20,23 @@
             transform: scale(1.01);
             box-shadow:2.5px 2.5px 0px 0px #505050;
         }
+        .header {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
     </style>
 </head>
 
-<body class="bg-zinc-900 text-white px-10 py-4">
+<body class="bg-zinc-900 text-white px-10 pb-4">
+    <div class="header flex flex-row justify-between items-center w-full mb-4 border-b border-zinc-800 px-4 py-4 bg-zinc-900">
+        <a id="header" class="flex flex-row justify-center items-center hover:none border px-3 py-2 border-zinc-700 rounded-lg" href="/home">
+            <img src="/images/Peacock 2.svg" alt="Binora Pre" class="w-12 h-12 mr-4 rounded-lg pt-1 bg-zinc-800">
+            <h1 class="text-3xl font-bold">Peacock</h1>
+        </a>
+    </div>
     <h1 class="text-2xl font-bold m-4 border-b-2 border-yellow-600 w-72">Please fill these details</h1>
-    <form class="flex flex-col gap-4">
+    <form action="/portfolio" method="post" class="flex flex-col gap-4">
         <!-- main -->
         <div class="main flex flex-col gap-4">
             <fieldset class="p-4 rounded text-sm peacock peacockk bg-zinc-800">
@@ -58,8 +69,11 @@
 
         <!-- Technical Skills -->
         <div class="">
-            <fieldset class="p-4 rounded text-sm peacock peacockk bg-zinc-800 flex flex-col gap-2">
-                <legend class="font-bold text-sm px-1.5 py-1 bg-green-600 rounded-lg">Technical Skills</legend>
+            <fieldset id="technical-skills-fieldset" class="p-4 rounded text-sm peacock peacockk bg-zinc-800 flex flex-col gap-2">
+                <legend class="flex gap-1">
+                    <p class="font-bold text-sm px-1.5 py-1 bg-green-600 rounded-lg flex flex-row items-center">Technical Skills</p>
+                    <a class="addmore font-semibold text-sm px-1.5 bg-blue-600 rounded-full flex flex-row items-center cursor-pointer hover:bg-blue-700" id="addmore1">Add More</a>
+                </legend>
                 <div class="flex items-center gap-2">
                     <label for="skill" class="text-sm">Skill</label>
                     <input type="text" id="skill" name="skill" placeholder="Enter skill"
@@ -67,6 +81,7 @@
                     <label for="proficiency" class="text-sm">Proficiency</label>
                     <input type="number" id="proficiency" name="proficiency" placeholder="Proficiency (out of 10)"
                         class="w-72 bg-zinc-700 text-gray-400 px-3 py-2 border border-zinc-600 rounded-lg focus:outline-none focus:border-zinc-400">
+                    <a class="remove font-semibold text-sm text-red-500 px-1.5 py-1 bg-transparent border border-red-600 rounded-full flex flex-row items-center cursor-pointer hover:text-red-600 hover:border-red-600" id="remove1">Remove</a>
                 </div>
             </fieldset>
         </div>
@@ -74,11 +89,13 @@
         <!-- gap -->
         <div class="border-b border-zinc-800 mb-5 pb-5"></div>
 
-
         <!-- Achievements -->
         <div class="">
-            <fieldset class="p-4 rounded text-sm peacock peacockk bg-zinc-800 flex flex-col gap-2">
-                <legend class="font-bold text-sm px-1.5 py-1 bg-green-600 rounded-lg">Achievements</legend>
+            <fieldset id="achievements-fieldset" class="p-4 rounded text-sm peacock peacockk bg-zinc-800 flex flex-col gap-2">
+                <legend class="flex gap-1">
+                    <p class="font-bold text-sm px-1.5 py-1 bg-green-600 rounded-lg flex flex-row items-center">Achievements</p>
+                    <a class="addmore font-semibold text-sm px-1.5 bg-blue-600 rounded-full flex flex-row items-center cursor-pointer hover:bg-blue-700" id="addmore2">Add More</a>
+                </legend>
                 <div class="flex items-center gap-2">
                     <label for="achievement" class="text-sm">Achievement</label>
                     <input type="text" id="achievement" name="achievement" placeholder="Enter achievement"
@@ -86,6 +103,7 @@
                     <label for="description" class="text-sm">Description</label>
                     <textarea id="description" name="description" placeholder="Tell more about it"
                         class="resize-none w-full bg-zinc-700 text-gray-400 px-3 py-2 border border-zinc-600 rounded-lg focus:outline-none focus:border-zinc-400"></textarea>
+                    <a class="remove font-semibold text-sm text-red-500 px-1.5 py-1 bg-transparent border border-red-600 rounded-full flex flex-row items-center cursor-pointer hover:text-red-600 hover:border-red-600" id="remove2">Remove</a>
                 </div>
             </fieldset>
         </div>
@@ -120,41 +138,42 @@
             </fieldset>
             <% } %>
 
-            <!-- gap -->
-            <div class="border-b border-zinc-800 mb-5 pb-5"></div>
+        <!-- gap -->
+        <div class="border-b border-zinc-800 mb-5 pb-5"></div>
 
-            <!-- Internships -->
-            <% for(let i=1; i <=formData['num-internships']; i++){ %>
-                <fieldset class="p-4 rounded text-sm peacock peacockk bg-zinc-800 flex flex-col gap-2">
-                    <legend class="font-bold text-sm px-1.5 py-1 bg-green-600 rounded-lg">Internship <%= i %>
-                    </legend>
-                    <div class="flex items-center gap-2">
-                        <label for="internshipCompany_<%= i %>" class="text-sm">Company Name</label>
-                        <input type="text" id="internshipCompany_<%= i %>" name="internshipCompany_<%= i %>"
-                            placeholder="Enter company name"
-                            class="w-72 bg-zinc-700 text-gray-400 px-3 py-2 border border-zinc-600 rounded-lg focus:outline-none focus:border-zinc-400">
-                        <label for="internshipDuration_<%= i %>" class="text-sm">Duration</label>
-                        <input type="text" id="internshipDuration_<%= i %>" name="internshipDuration_<%= i %>"
-                            placeholder="Enter duration (e.g., 6 months)"
-                            class="w-72 bg-zinc-700 text-gray-400 px-3 py-2 border border-zinc-600 rounded-lg focus:outline-none focus:border-zinc-400">
-                    </div>
-                    <div class="flex items-center gap-2">
-                        <label for="internshipSkills_<%= i %>" class="text-sm">Skills Used</label>
-                        <input type="text" id="internshipSkills_<%= i %>" name="internshipSkills_<%= i %>"
-                            placeholder="Enter skills used (e.g., HTML, CSS, JavaScript)"
-                            class="w-72 bg-zinc-700 text-gray-400 px-3 py-2 border border-zinc-600 rounded-lg focus:outline-none focus:border-zinc-400">
-                        <label for="internshipCertificate_<%= i %>" class="text-sm">Certificate Link</label>
-                        <input type="text" id="internshipCertificate_<%= i %>" name="internshipCertificate_<%= i %>"
-                            placeholder="Enter certificate link (if any)"
-                            class="w-72 bg-zinc-700 text-gray-400 px-3 py-2 border border-zinc-600 rounded-lg focus:outline-none focus:border-zinc-400">
-                    </div>
-                </fieldset>
-            <% } %>
+        <!-- Internships -->
+        <% for(let i=1; i <=formData['num-internships']; i++){ %>
+            <fieldset class="p-4 rounded text-sm peacock peacockk bg-zinc-800 flex flex-col gap-2">
+                <legend class="font-bold text-sm px-1.5 py-1 bg-green-600 rounded-lg">Internship <%= i %>
+                </legend>
+                <div class="flex items-center gap-2">
+                    <label for="internshipCompany_<%= i %>" class="text-sm">Company Name</label>
+                    <input type="text" id="internshipCompany_<%= i %>" name="internshipCompany_<%= i %>"
+                        placeholder="Enter company name"
+                        class="w-72 bg-zinc-700 text-gray-400 px-3 py-2 border border-zinc-600 rounded-lg focus:outline-none focus:border-zinc-400">
+                    <label for="internshipDuration_<%= i %>" class="text-sm">Duration</label>
+                    <input type="text" id="internshipDuration_<%= i %>" name="internshipDuration_<%= i %>"
+                        placeholder="Enter duration (e.g., 6 months)"
+                        class="w-72 bg-zinc-700 text-gray-400 px-3 py-2 border border-zinc-600 rounded-lg focus:outline-none focus:border-zinc-400">
+                </div>
+                <div class="flex items-center gap-2">
+                    <label for="internshipSkills_<%= i %>" class="text-sm">Skills Used</label>
+                    <input type="text" id="internshipSkills_<%= i %>" name="internshipSkills_<%= i %>"
+                        placeholder="Enter skills used (e.g., HTML, CSS, JavaScript)"
+                        class="w-72 bg-zinc-700 text-gray-400 px-3 py-2 border border-zinc-600 rounded-lg focus:outline-none focus:border-zinc-400">
+                    <label for="internshipCertificate_<%= i %>" class="text-sm">Certificate Link</label>
+                    <input type="text" id="internshipCertificate_<%= i %>" name="internshipCertificate_<%= i %>"
+                        placeholder="Enter certificate link (if any)"
+                        class="w-72 bg-zinc-700 text-gray-400 px-3 py-2 border border-zinc-600 rounded-lg focus:outline-none focus:border-zinc-400">
+                </div>
+            </fieldset>
+        <% } %>
 
-            <!-- gap -->
-            <div class="border-b border-zinc-800 mb-5 pb-5"></div>
+        <!-- gap -->
+        <div class="border-b border-zinc-800 mb-5 pb-5"></div>
 
-            <!-- Platforms -->
+        <!-- Platforms -->
+        <% if(formData.platforms){ %>
             <% formData.platforms.forEach(platform => { %>
                 <fieldset class="p-4 rounded text-sm peacock peacockk bg-zinc-800 flex flex-col gap-2">
                     <legend class="font-bold text-sm px-1.5 py-1 bg-green-600 rounded-lg"><%= platform %>
@@ -167,24 +186,74 @@
                     </div>
                 </fieldset>
             <% }); %>
+        <% } %>
 
-            <!-- gap -->
-            <div class="border-b border-zinc-800 mb-5 pb-5"></div>
+        <!-- gap -->
+        <div class="border-b border-zinc-800 mb-5 pb-5"></div>
 
-            <fieldset class="p-4 rounded text-sm peacock peacockk bg-zinc-800 flex flex-col gap-2">
-                <legend class="font-bold text-sm px-1.5 py-1 bg-green-600 rounded-lg">Contact
-                </legend>
-                <div class="flex items-center gap-2">
-                    <label for="email" class="text-sm">Email</label>
-                    <input type="email" id="email" name="email"
-                        placeholder="Enter your email"
-                        class="w-72 bg-zinc-700 text-gray-400 px-3 py-2 border border-zinc-600 rounded-lg focus:outline-none focus:border-zinc-400">
-                </div>
-            </fieldset>
+        <fieldset class="p-4 rounded text-sm peacock peacockk bg-zinc-800 flex flex-col gap-2">
+            <legend class="font-bold text-sm px-1.5 py-1 bg-green-600 rounded-lg">Contact
+            </legend>
+            <div class="flex items-center gap-2">
+                <label for="email" class="text-sm">Email</label>
+                <input type="email" id="email" name="email"
+                    placeholder="Enter your email"
+                    class="w-72 bg-zinc-700 text-gray-400 px-3 py-2 border border-zinc-600 rounded-lg focus:outline-none focus:border-zinc-400">
+            </div>
+        </fieldset>
+
+        <button type="submit" class="px-3 py-2 bg-blue-500 rounded-lg hover:bg-blue-600">Submit</button>
     </form>
 
     <!-- footer -->
     <h5 class="flex flex-col justify-center items-center px-4.5 py-3">&copy; Peacock</h5>
+
+    <script>
+        document.getElementById('addmore1').addEventListener('click', function() {
+            const fieldset = document.getElementById('technical-skills-fieldset');
+            const div = document.createElement('div');
+            div.className = 'flex items-center gap-2';
+            div.innerHTML = `
+                <label for="skill" class="text-sm">Skill</label>
+                <input type="text" id="skill" name="skill" placeholder="Enter skill"
+                    class="w-72 bg-zinc-700 text-gray-400 px-3 py-2 border border-zinc-600 rounded-lg focus:outline-none focus:border-zinc-400">
+                <label for="proficiency" class="text-sm">Proficiency</label>
+                <input type="number" id="proficiency" name="proficiency" placeholder="Proficiency (out of 10)"
+                    class="w-72 bg-zinc-700 text-gray-400 px-3 py-2 border border-zinc-600 rounded-lg focus:outline-none focus:border-zinc-400">
+                <a class="remove font-semibold text-sm text-red-500 px-1.5 py-1 bg-transparent border border-red-600 rounded-full flex flex-row items-center cursor-pointer hover:text-red-600 hover:border-red-600" id="remove1">Remove</a>
+            `;
+            fieldset.appendChild(div);
+            attachRemoveEvent(div.querySelector('.remove'));
+        });
+
+        document.getElementById('addmore2').addEventListener('click', function() {
+            const fieldset = document.getElementById('achievements-fieldset');
+            const div = document.createElement('div');
+            div.className = 'flex items-center gap-2';
+            div.innerHTML = `
+                <label for="achievement" class="text-sm">Achievement</label>
+                <input type="text" id="achievement" name="achievement" placeholder="Enter achievement"
+                    class="w-72 bg-zinc-700 text-gray-400 px-3 py-2 border border-zinc-600 rounded-lg focus:outline-none focus:border-zinc-400">
+                <label for="description" class="text-sm">Description</label>
+                <textarea id="description" name="description" placeholder="Tell more about it"
+                    class="resize-none w-full bg-zinc-700 text-gray-400 px-3 py-2 border border-zinc-600 rounded-lg focus:outline-none focus:border-zinc-400"></textarea>
+                <a class="remove font-semibold text-sm text-red-500 px-1.5 py-1 bg-transparent border border-red-600 rounded-full flex flex-row items-center cursor-pointer hover:text-red-600 hover:border-red-600" id="remove2">Remove</a>
+            `;
+            fieldset.appendChild(div);
+            attachRemoveEvent(div.querySelector('.remove'));
+        });
+
+        function attachRemoveEvent(button) {
+            button.addEventListener('click', function() {
+                this.parentElement.remove();
+            });
+        }
+
+        // Attach remove event to existing remove buttons
+        document.querySelectorAll('.remove').forEach(button => {
+            attachRemoveEvent(button);
+        });
+    </script>
 </body>
 
 </html>

@@ -16,9 +16,20 @@
         .peacockk:hover{
             transform: scale(1.1);
         }
+        .header {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
     </style>
 </head>
-<body class="bg-zinc-900 text-white flex flex-col items-center justify-center gap-2">
+<body class="bg-zinc-900 text-white flex flex-col items-center gap-2">
+    <div class="header flex flex-row justify-between items-center w-full mb-4 border-b border-zinc-700 px-4 py-4 bg-zinc-900">
+        <a id="header" class="flex flex-row justify-center items-center hover:none border px-3 py-2 border-zinc-700 rounded-lg" href="/home">
+            <img src="/images/Peacock 2.svg" alt="Binora Pre" class="w-12 h-12 mr-4 rounded-lg pt-1 bg-zinc-800">
+            <h1 class="text-3xl font-bold">Peacock</h1>
+        </a>
+    </div>
     <h1 class="text-2xl font-bold m-4">Peacock Welcomes you, <%= name %></h1>
     <div class="main bg-zinc-800 peacockk border border-zinc-600 rounded-lg">
         <a class="builder gap-0 flex flex-col" href="/forefront">

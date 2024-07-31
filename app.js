@@ -6,6 +6,15 @@ const serverless = require('serverless-http');
 const app = express();
 const port = process.env.PORT || 3000;
 
+const userModel = require(`./models/user`);
+
+const cookieParser = require('cookie-parser')
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+// multeconfig import kr rhe hain
+const upload = require('./configs/multerconfig');
+
+
 // Serve static files from the "public" directory
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -14,6 +23,7 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(cookieParser());
 
 // Define routes
 app.get('/', (req, res) => {
