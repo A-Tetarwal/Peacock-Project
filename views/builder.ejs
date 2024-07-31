@@ -13,7 +13,7 @@
         }
 
         .peacockk {
-            transition: transform 0.2s ease-in-out;
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
         }
 
         .peacockk:hover {
@@ -36,9 +36,17 @@
         </a>
     </div>
     <h1 class="text-2xl font-bold m-4 border-b-2 border-yellow-600 w-72">Please fill these details</h1>
-    <form action="/portfolio" method="post" class="flex flex-col gap-4">
+    <form action="/builder" method="post" enctype="multipart/form-data" class="flex flex-col gap-4">
         <!-- main -->
         <div class="main flex flex-col gap-4">
+            <fieldset class="p-4 rounded text-sm peacock peacockk bg-zinc-800">
+                <legend class="font-bold text-sm px-1.5 py-1 bg-green-600 rounded-lg">Profile Picture</legend>
+                <div class="profilepic">
+                    <label for="image" class="text-sm font-semibold text-white px-1">Profile Picture</label>
+                    <input type="file" name="image" id="image" placeholder="Choose a profile picture" class="outline-none px-4 py-2 text-sm bg-zinc-700 w-full rounded placeholder:text-zinc-300 focus:ring-2 focus:ring-blue-500">    
+                </div>
+            </fieldset>
+            
             <fieldset class="p-4 rounded text-sm peacock peacockk bg-zinc-800">
                 <legend class="font-bold text-sm px-1.5 py-1 bg-green-600 rounded-lg">About</legend>
                 <div class="flex items-center gap-2">
@@ -56,8 +64,8 @@
                     <label for="institution" class="text-sm">Institution (Graduation)</label>
                     <input type="text" id="institution" name="institution" placeholder="Name of the institution"
                         class="w-72 bg-zinc-700 text-gray-400 px-3 py-2 border border-zinc-600 rounded-lg focus:outline-none focus:border-zinc-400">
-                    <label for="degree" class="text-sm">Grades</label>
-                    <input type="number" id="degree" name="degree" placeholder="Grades"
+                    <label for="grades" class="text-sm">Grades</label>
+                    <input type="number" id="grades" name="grades" placeholder="Grades" step=".01"
                         class="w-72 bg-zinc-700 text-gray-400 px-3 py-2 border border-zinc-600 rounded-lg focus:outline-none focus:border-zinc-400">
                 </div>
             </fieldset>
@@ -173,20 +181,23 @@
         <div class="border-b border-zinc-800 mb-5 pb-5"></div>
 
         <!-- Platforms -->
-        <% if(formData.platforms){ %>
-            <% formData.platforms.forEach(platform => { %>
-                <fieldset class="p-4 rounded text-sm peacock peacockk bg-zinc-800 flex flex-col gap-2">
-                    <legend class="font-bold text-sm px-1.5 py-1 bg-green-600 rounded-lg"><%= platform %>
-                    </legend>
-                    <div class="flex items-center gap-2">
-                        <label for="email" class="text-sm"><%= platform %></label>
-                        <input type="text" id="email" name="email"
-                            placeholder="Enter username for <%= platform %>"
-                            class="w-72 bg-zinc-700 text-gray-400 px-3 py-2 border border-zinc-600 rounded-lg focus:outline-none focus:border-zinc-400">
-                    </div>
-                </fieldset>
-            <% }); %>
-        <% } %>
+<!-- Platforms -->
+<% if (formData.platforms) { %>
+    <% formData.platforms.forEach((platform, index) => { %>
+        <fieldset class="p-4 rounded text-sm peacock peacockk bg-zinc-800 flex flex-col gap-2">
+            <legend class="font-bold text-sm px-1.5 py-1 bg-green-600 rounded-lg"><%= platform %></legend>
+            <div class="flex items-center gap-2">
+                <label for="username_<%= index %>" class="text-sm"><%= platform %></label>
+                <input type="text" id="username_<%= index %>" name="platforms[<%= index %>].username"
+                    placeholder="Enter username for <%= platform %>"
+                    class="w-72 bg-zinc-700 text-gray-400 px-3 py-2 border border-zinc-600 rounded-lg focus:outline-none focus:border-zinc-400">
+                <input type="hidden" name="platforms[<%= index %>].platform" value="<%= platform %>">
+            </div>
+        </fieldset>
+    <% }); %>
+<% } %>
+
+
 
         <!-- gap -->
         <div class="border-b border-zinc-800 mb-5 pb-5"></div>
@@ -198,6 +209,20 @@
                 <label for="email" class="text-sm">Email</label>
                 <input type="email" id="email" name="email"
                     placeholder="Enter your email"
+                    class="w-72 bg-zinc-700 text-gray-400 px-3 py-2 border border-zinc-600 rounded-lg focus:outline-none focus:border-zinc-400">
+            </div>
+        </fieldset>
+        
+        <!-- gap -->
+        <div class="border-b border-zinc-800 mb-5 pb-5"></div>
+
+        <fieldset class="p-4 rounded text-sm peacock peacockk bg-zinc-800 flex flex-col gap-2">
+            <legend class="font-bold text-sm px-1.5 py-1 bg-green-600 rounded-lg">Password
+            </legend>
+            <div class="flex items-center gap-2">
+                <label for="password" class="text-sm">Password</label>
+                <input type="password" id="password" name="password"
+                    placeholder="Set your password"
                     class="w-72 bg-zinc-700 text-gray-400 px-3 py-2 border border-zinc-600 rounded-lg focus:outline-none focus:border-zinc-400">
             </div>
         </fieldset>
