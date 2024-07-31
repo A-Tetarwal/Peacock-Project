@@ -153,7 +153,8 @@ app.post('/builder', upload.single('image'), async (req, res) => {
     const newUser = await createUser(formData);
 
     // Send a response
-    res.status(200).send({ message: 'User created successfully', user: newUser });
+    // res.status(200).send({ message: 'User created successfully', user: newUser });
+    res.redirect(`/portfolio/${newUser.name}`,{ user:newUser });
   } catch (error) {
     // Ensure only one response is sent
     if (!res.headersSent) {
@@ -162,6 +163,22 @@ app.post('/builder', upload.single('image'), async (req, res) => {
   }
 });
 
+app.get('/portfolio/:name', async (req, res) => {
+  try {
+    // Find user by name
+    const user = await userModel.findOne({ name: req.params.name });
+
+    if (!user) {
+      return res.status(404).send('User not found');
+    }
+
+    // Render the portfolio page with user data
+    res.render('portfolio', { user });
+  } catch (error) {
+    console.error('Error fetching user:', error);
+    res.status(500).send({ message: 'Error fetching user', error: error.message });
+  }
+});
 
 
 app.listen(port, () => {

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= user.name %>'s Portfolio</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-900 text-gray-100">
+  <!-- Header -->
+  <header class="bg-gray-800 text-white py-6">
+    <div class="container mx-auto px-4">
+      <h1 class="text-4xl font-bold text-center"><%= user.name %>'s Portfolio</h1>
+      <img src="/images/<%= user.profilepic %>" alt="<%= user.name %>'s Profile Picture" class="mt-4 w-32 h-32 rounded-full mx-auto border-4 border-gray-700">
+      <p class="mt-2 text-center text-lg"><%= user.about %></p>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="container mx-auto px-4 py-8">
+    <!-- Technical Skills -->
+    <section id="technical-skills" class="mb-8">
+      <h2 class="text-3xl font-semibold mb-4">Technical Skills</h2>
+      <% if (user.technicalSkills.length > 0) { %>
+        <ul class="list-disc pl-5">
+          <% user.technicalSkills.forEach(skill => { %>
+            <li class="text-lg"><strong><%= skill.skill %></strong>: <%= skill.proficiency %></li>
+          <% }) %>
+        </ul>
+      <% } else { %>
+        <p class="text-gray-400">No technical skills listed.</p>
+      <% } %>
+    </section>
+
+    <!-- Achievements -->
+    <section id="achievements" class="mb-8">
+      <h2 class="text-3xl font-semibold mb-4">Achievements</h2>
+      <% if (user.achievements.length > 0) { %>
+        <ul class="list-disc pl-5">
+          <% user.achievements.forEach(achievement => { %>
+            <li class="text-lg">
+              <strong><%= achievement.achievement %></strong>: <%= achievement.description %>
+            </li>
+          <% }) %>
+        </ul>
+      <% } else { %>
+        <p class="text-gray-400">No achievements listed.</p>
+      <% } %>
+    </section>
+
+    <!-- Projects -->
+    <section id="projects" class="mb-8">
+      <h2 class="text-3xl font-semibold mb-4">Projects</h2>
+      <% if (user.projects.length > 0) { %>
+        <ul class="list-disc pl-5">
+          <% user.projects.forEach(project => { %>
+            <li class="mb-4">
+              <h3 class="text-2xl font-medium"><%= project.projectName %></h3>
+              <p><%= project.projectAbout %></p>
+              <p><a href="<%= project.githublink %>" target="_blank" class="text-blue-400 underline">GitHub Link</a></p>
+              <% if (project.demo) { %>
+                <p><a href="<%= project.demo %>" target="_blank" class="text-blue-400 underline">Demo</a></p>
+              <% } %>
+            </li>
+          <% }) %>
+        </ul>
+      <% } else { %>
+        <p class="text-gray-400">No projects listed.</p>
+      <% } %>
+    </section>
+
+    <!-- Internships -->
+    <section id="internships" class="mb-8">
+      <h2 class="text-3xl font-semibold mb-4">Internships</h2>
+      <% if (user.internships.length > 0) { %>
+        <ul class="list-disc pl-5">
+          <% user.internships.forEach(internship => { %>
+            <li class="mb-4">
+              <strong><%= internship.internshipCompany %></strong>
+              <p>Duration: <%= internship.internshipDuration %></p>
+              <p>Skills: <%= internship.internshipSkills %></p>
+              <% if (internship.internshipCertificate) { %>
+                <p><a href="<%= internship.internshipCertificate %>" target="_blank" class="text-blue-400 underline">Certificate</a></p>
+              <% } %>
+            </li>
+          <% }) %>
+        </ul>
+      <% } else { %>
+        <p class="text-gray-400">No internships listed.</p>
+      <% } %>
+    </section>
+
+    <!-- Platforms -->
+    <section id="platforms">
+      <h2 class="text-3xl font-semibold mb-4">Platforms</h2>
+      <% if (user.platforms.length > 0) { %>
+        <ul class="list-disc pl-5">
+          <% user.platforms.forEach(platform => { %>
+            <li class="text-lg"><strong><%= platform.platform %></strong>: <%= platform.username %></li>
+          <% }) %>
+        </ul>
+      <% } else { %>
+        <p class="text-gray-400">No platforms listed.</p>
+      <% } %>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-gray-800 text-gray-300 py-4">
+    <div class="container mx-auto px-4 text-center">
+      <p>Contact: <a href="mailto:<%= user.email %>" class="text-blue-400 underline"><%= user.email %></a></p>
+    </div>
+  </footer>
+</body>
+</html>
