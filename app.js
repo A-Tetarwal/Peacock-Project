@@ -2,18 +2,16 @@ const express = require('express');
 const path = require('path');
 const session = require('express-session');
 const serverless = require('serverless-http');
+const cookieParser = require('cookie-parser');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const upload = require('./configs/multerconfig');
+const userModel = require('./models/user');  // Ensure the correct model is imported
+const { platform } = require('os');
+
 
 const app = express();
 const port = process.env.PORT || 3000;
-
-const userModel = require(`./models/user`);
-
-const cookieParser = require('cookie-parser')
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-// multeconfig import kr rhe hain
-const upload = require('./configs/multerconfig');
-
 
 // Serve static files from the "public" directory
 app.use(express.static(path.join(__dirname, 'public')));
@@ -25,13 +23,19 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
 
-// Define routes
+// Session middleware
+app.use(session({ secret: 'secret', resave: false, saveUninitialized: true }));
+
+// Middleware to log requests
+app.use((req, res, next) => {
+  console.log('Middleware check:', req.method, req.url);
+  next();
+});
+
+// Routes
 app.get('/', (req, res) => {
   res.render('index', { title: 'Home' });
 });
-
-// Session middleware
-app.use(session({ secret: 'secret', resave: false, saveUninitialized: true }));
 
 app.post('/name', (req, res) => {
   const name = req.body.name;
@@ -58,105 +62,112 @@ app.get('/builder', (req, res) => {
   res.render('builder', { formData: req.session.formData });
 });
 
-// const multer = require('multer');
-// const upload = multer(); // or your multer configuration
-
-app.use((req, res, next) => {
-  console.log('Middleware check:', req.method, req.url);
-  next();
-});
-
-// Function to normalize arrays to handle single and multiple inputs
-const normalizeArray = (input) => Array.isArray(input) ? input : [input];
-
-// Function to extract dynamic fields
-const extractDynamicFields = (prefix, body) => {
-  const result = [];
-  let index = 1;
-  while (true) {
-    const item = {};
-    let hasData = false;
-    for (const key in body) {
-      if (key.startsWith(`${prefix}_${index}`)) {
-        const fieldName = key.split('_')[0];
-        item[fieldName] = body[key];
-        hasData = true;
-      }
-    }
-    if (!hasData) break;
-    result.push(item);
-    index++;
-  }
-  return result;
-};
-
 app.post('/builder', upload.single('image'), async (req, res) => {
-  req.session.formData = req.body;
-  console.log(req.session.formData);
+  const formData = req.body;
+  console.log('Middleware check: POST /builder');
+  console.log('Received formData:', formData);
 
-  const {
-      name,
-      about,
-      institution,
-      grades,
-      email,
-      password,
-  } = req.body;
+  try {
+    // Function to create a new user
+    const createUser = async (formData) => {
+      try {
+        // Parse formData
+        const user = {
+          name: formData.name || '',
+          about: formData.about || '',
+          institution: formData.institution || '',
+          grades: formData.grades || '',
+          technicalSkills: [],
+          achievements: [],
+          projects: [],
+          internships: [],
+          platforms: [],
+          email: formData.email,
+          password: formData.password,
+          profilepic: formData.profilepic || 'default.jpg'
+        };
 
-  const skill = normalizeArray(req.body.skill);
-  const proficiency = normalizeArray(req.body.proficiency);
-  const achievement = normalizeArray(req.body.achievement);
-  const description = normalizeArray(req.body.description);
+        // Process technical skills
+        if (formData.skill && formData.proficiency) {
+          user.technicalSkills.push({
+            skill: formData.skill,
+            proficiency: Number(formData.proficiency) || null
+          });
+        }
 
-  const technicalSkills = skill.map((s, index) => ({
-      skill: s,
-      proficiency: proficiency[index] || null,
-  }));
+        // Process achievements
+        if (formData.achievement && formData.description) {
+          user.achievements.push({
+            achievement: formData.achievement,
+            description: formData.description
+          });
+        }
 
-  const achievements = achievement.map((a, index) => ({
-      achievement: a,
-      description: description[index] || '',
-  }));
+        // Process projects
+        let i = 1;
+        while (formData[`projectName_${i}`]) {
+          user.projects.push({
+            projectName: formData[`projectName_${i}`],
+            projectAbout: formData[`projectAbout_${i}`] || '',
+            githublink: formData[`githublink_${i}`] || '',
+            demo: formData[`demo_${i}`] || ''
+          });
+          i++;
+        }
 
-  const projects = extractDynamicFields('project', req.body);
-  const internships = extractDynamicFields('internship', req.body);
+        // Process internships
+        let j = 1;
+        while (formData[`internshipCompany_${j}`]) {
+          user.internships.push({
+            internshipCompany: formData[`internshipCompany_${j}`],
+            internshipDuration: formData[`internshipDuration_${j}`] || '',
+            internshipSkills: formData[`internshipSkills_${j}`] || '',
+            internshipCertificate: formData[`internshipCertificate_${j}`] || ''
+          });
+          j++;
+        }
 
-  // Parse platforms data from flat structure
-  const platforms = [];
-  let i = 0;
-  while (req.body[`platforms[${i}]`]) {
-      platforms.push({
-          platform: req.body[`platforms[${i}].platform`],
-          username: req.body[`platforms[${i}].username`]
-      });
-      i++;
+        // Process platforms
+        let k = 0;
+        while (formData[`platforms[${k}].username`]) {
+          user.platforms.push({
+            platform: formData[`platforms[${k}].platform`] || '',
+            username: formData[`platforms[${k}].username`] || ''
+          });
+          k++;
+        }
+
+        // Create the user
+        const newUser = new userModel(user);
+        await newUser.save();
+        console.log('User created successfully:', newUser);
+
+        return newUser;
+      } catch (error) {
+        console.error('Error creating user:', error);
+        throw error;
+      }
+    };
+
+    // Create a new user with the form data
+    const newUser = await createUser(formData);
+
+    // Send a response
+    res.status(200).send({ message: 'User created successfully', user: newUser });
+  } catch (error) {
+    // Ensure only one response is sent
+    if (!res.headersSent) {
+      res.status(500).send({ message: 'Error creating user', error: error.message });
+    }
   }
-
-  const user = new userModel({
-      name,
-      about,
-      institution,
-      grades,
-      email,
-      password,
-      technicalSkills,
-      achievements,
-      projects,
-      internships,
-      platforms,  // Save platforms data
-  });
-
-  await user.save();
-  console.log(user);
-
-  res.send('/success');
 });
 
 
 
+app.listen(port, () => {
+  console.log(`Server running on http://localhost:${port}`);
+});
 
 // Export the app for Vercel
 module.exports = app;
 module.exports.handler = serverless(app);
-
-app.listen(port, () => console.log(`server running on port ${port}`))

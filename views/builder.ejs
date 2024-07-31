@@ -181,23 +181,20 @@
         <div class="border-b border-zinc-800 mb-5 pb-5"></div>
 
         <!-- Platforms -->
-<!-- Platforms -->
-<% if (formData.platforms) { %>
-    <% formData.platforms.forEach((platform, index) => { %>
-        <fieldset class="p-4 rounded text-sm peacock peacockk bg-zinc-800 flex flex-col gap-2">
-            <legend class="font-bold text-sm px-1.5 py-1 bg-green-600 rounded-lg"><%= platform %></legend>
-            <div class="flex items-center gap-2">
-                <label for="username_<%= index %>" class="text-sm"><%= platform %></label>
-                <input type="text" id="username_<%= index %>" name="platforms[<%= index %>].username"
-                    placeholder="Enter username for <%= platform %>"
-                    class="w-72 bg-zinc-700 text-gray-400 px-3 py-2 border border-zinc-600 rounded-lg focus:outline-none focus:border-zinc-400">
-                <input type="hidden" name="platforms[<%= index %>].platform" value="<%= platform %>">
-            </div>
-        </fieldset>
-    <% }); %>
-<% } %>
-
-
+        <% if (formData.platforms) { %>
+            <% formData.platforms.forEach((platform, index) => { %>
+                <fieldset class="p-4 rounded text-sm peacock peacockk bg-zinc-800 flex flex-col gap-2">
+                    <legend class="font-bold text-sm px-1.5 py-1 bg-green-600 rounded-lg"><%= platform %></legend>
+                    <div class="flex items-center gap-2">
+                        <label for="username_<%= index %>" class="text-sm"><%= platform %></label>
+                        <input type="text" id="username_<%= index %>" name="platforms[<%= index %>].username"
+                            placeholder="Enter username for <%= platform %>"
+                            class="w-72 bg-zinc-700 text-gray-400 px-3 py-2 border border-zinc-600 rounded-lg focus:outline-none focus:border-zinc-400">
+                        <input type="hidden" name="platforms[<%= index %>].platform" value="<%= platform %>">
+                    </div>
+                </fieldset>
+            <% }); %>
+        <% } %>
 
         <!-- gap -->
         <div class="border-b border-zinc-800 mb-5 pb-5"></div>
