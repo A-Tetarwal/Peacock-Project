@@ -1,15 +1,17 @@
 const mongoose = require('mongoose');
+const { type } = require('os');
 
-// mongoose.connect(`mongodb://127.0.0.1:27017/Peacock`);
+mongoose.connect(`mongodb://127.0.0.1:27017/Peacock`);
 // Connect to MongoDB Atlas
-mongoose.connect('mongodb+srv://A-Tetarwal:koWexXCQvx7O7Eqi@cluster0.km9ovrx.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0').then(() => {
-    console.log('Connected to MongoDB Atlas');
-}).catch((err) => {
-    console.error('Error connecting to MongoDB Atlas:', err.message);
-});
+// mongoose.connect('mongodb+srv://A-Tetarwal:koWexXCQvx7O7Eqi@cluster0.km9ovrx.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0').then(() => {
+//     console.log('Connected to MongoDB Atlas');
+// }).catch((err) => {
+//     console.error('Error connecting to MongoDB Atlas:', err.message);
+// });
 
 const userSchema = new mongoose.Schema({
     name: { type: String, default: '' },
+    oneliner: { type: String, default: '' },
     about: { type: String, default: '' },
     institution: { type: String, default: '' },
     grades: { type: String, default: '' },
@@ -22,6 +24,7 @@ const userSchema = new mongoose.Schema({
       description: { type: String, default: '' }
     }],
     projects: [{
+      projectpic: {type: String, default: 'projectdefault.jpg'},
       projectName: { type: String, default: '' },
       projectAbout: { type: String, default: '' },
       githublink: { type: String, default: '' },

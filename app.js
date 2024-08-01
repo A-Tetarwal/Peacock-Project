@@ -74,6 +74,7 @@ app.post('/builder', upload.single('image'), async (req, res) => {
         // Parse formData
         const user = {
           name: formData.name || '',
+          oneliner: formData.oneliner || '',
           about: formData.about || '',
           institution: formData.institution || '',
           grades: formData.grades || '',
@@ -88,11 +89,11 @@ app.post('/builder', upload.single('image'), async (req, res) => {
         };
 
         // Process technical skills
-        if (formData.skill && formData.proficiency) {
-          user.technicalSkills.push({
-            skill: formData.skill,
-            proficiency: Number(formData.proficiency) || null
-          });
+        if (Array.isArray(formData.skill) && Array.isArray(formData.proficiency)) {
+          user.technicalSkills = formData.skill.map((s, index) => ({
+            skill: s,
+            proficiency: Number(formData.proficiency[index]) || null
+          }));
         }
 
         // Process achievements
