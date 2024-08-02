@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Peacock</title>
+    <link rel="stylesheet" href="/stylesheets/index.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .peacock  {
+            box-shadow:inset 0px 0px 10px #333333;
+        }
+
+        .peacockk {
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+
+        .peacockk:hover {
+            transform: scale(1.01);
+            box-shadow:2.5px 2.5px 0px 0px #505050;
+        }
+        .header {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+    </style>
+</head>
+
+<body class="bg-zinc-900 text-white px-10 pb-4">
+    <div class="header flex flex-row justify-between items-center w-full mb-4 border-b border-zinc-800 px-4 py-4 bg-zinc-900">
+        <a id="header" class="flex flex-row justify-center items-center hover:none border px-3 py-2 border-zinc-700 rounded-lg" href="/home">
+            <img src="/images/Peacock 2.svg" alt="Binora Pre" class="w-12 h-12 mr-4 rounded-lg pt-1 bg-zinc-800">
+            <h1 class="text-3xl font-bold">Peacock</h1>
+        </a>
+    </div>
+    <h1 class="text-2xl font-bold m-4 border-b-2 border-yellow-600 w-72">Please Edit these details</h1>
+    <form action="/edit/<%= user.name %>" method="post" enctype="multipart/form-data" class="flex flex-col gap-4">
+        <!-- main -->
+        <div class="main flex flex-col gap-4">
+            <fieldset class="p-4 rounded text-sm peacock peacockk bg-zinc-800">
+                <legend class="font-bold text-sm px-1.5 py-1 bg-green-600 rounded-lg">Profile Picture</legend>
+                <div class="profilepic">
+                    <label for="image" class="text-sm font-semibold text-white px-1">Profile Picture</label>
+                    <input type="file" name="image" id="image" placeholder="Choose a profile picture" class="outline-none px-4 py-2 text-sm bg-zinc-700 w-full rounded placeholder:text-zinc-300 focus:ring-2 focus:ring-blue-500">    
+                </div>
+            </fieldset>
+            
+            <fieldset class="p-4 rounded text-sm peacock peacockk bg-zinc-800">
+                <legend class="font-bold text-sm px-1.5 py-1 bg-green-600 rounded-lg">About</legend>
+                <div class="flex items-center gap-2">
+                    <label for="name" class="text-sm">Name</label>
+                    <input type="text" id="name" name="name" value="<%= user.name %>" placeholder="Enter your full name"
+                        class="w-72 bg-zinc-700 text-gray-400 px-3 py-2 border border-zinc-600 rounded-lg focus:outline-none focus:border-zinc-400">
+                    <label for="oneliner" class="text-sm">Oneliner</label>
+                    <input type="text" id="oneliner" name="oneliner" value="<%= user.oneliner %>" placeholder="Enter oneliner (eg. web devloper & designer)"
+                        class="w-72 bg-zinc-700 text-gray-400 px-3 py-2 border border-zinc-600 rounded-lg focus:outline-none focus:border-zinc-400">
+                    <label for="about" class="text-sm">Description</label>
+                    <textarea id="about" name="about" placeholder="What describes you best?"
+                        class="resize-none w-full bg-zinc-700 text-gray-400 px-3 py-2 border border-zinc-600 rounded-lg focus:outline-none focus:border-zinc-400"><%= user.about %></textarea>
+                </div>
+            </fieldset>
+            <fieldset class="p-4 rounded text-sm peacock peacockk bg-zinc-800">
+                <legend class="font-bold text-sm px-1.5 py-1 bg-green-600 rounded-lg">Education</legend>
+                <div class="flex items-center gap-2">
+                    <label for="institution" class="text-sm">Institution (Graduation)</label>
+                    <input type="text" id="institution" name="institution" value="<%= user.institution %>" placeholder="Name of the institution"
+                        class="w-72 bg-zinc-700 text-gray-400 px-3 py-2 border border-zinc-600 rounded-lg focus:outline-none focus:border-zinc-400">
+                    <label for="grades" class="text-sm">Grades</label>
+                    <input type="number" id="grades" name="grades" value="<%= user.grades %>" placeholder="Grades" step=".01"
+                        class="w-72 bg-zinc-700 text-gray-400 px-3 py-2 border border-zinc-600 rounded-lg focus:outline-none focus:border-zinc-400">
+                </div>
+            </fieldset>
+        </div>
+
+        <!-- gap -->
+        <div class="border-b border-zinc-800 mb-5 pb-5"></div>
+
+
+        <!-- Technical Skills -->
+        <div class="">
+            <fieldset id="technical-skills-fieldset" class="p-4 rounded text-sm peacock peacockk bg-zinc-800 flex flex-col gap-2">
+                <legend class="flex gap-1">
+                    <p class="font-bold text-sm px-1.5 py-1 bg-green-600 rounded-lg flex flex-row items-center">Technical Skills</p>
+                    <a class="addmore font-semibold text-sm px-1.5 bg-blue-600 rounded-full flex flex-row items-center cursor-pointer hover:bg-blue-700" id="addmore1">Add More</a>
+                </legend>
+                <div class="flex flex-col gap-2">
+                    <% user.technicalSkills.forEach((skill, index) => { %>
+                        <div class="flex items-center gap-2">
+                            <label for="technicalSkills[<%= index %>][skill]" class="text-sm">Skill</label>
+                            <input type="text" id="skill" name="technicalSkills[<%= index %>][skill]" value="<%= skill.skill %>" placeholder="Enter skill"
+                                class="w-72 bg-zinc-700 text-gray-400 px-3 py-2 border border-zinc-600 rounded-lg focus:outline-none focus:border-zinc-400">
+                            <label for="technicalSkills[<%= index %>][proficiency]" class="text-sm">Proficiency</label>
+                            <input type="number" id="proficiency" for="technicalSkills[<%= index %>][proficiency]" value="<%= skill.proficiency %>" placeholder="Proficiency (out of 10)"
+                                class="w-72 bg-zinc-700 text-gray-400 px-3 py-2 border border-zinc-600 rounded-lg focus:outline-none focus:border-zinc-400">
+                            <a class="remove font-semibold text-sm text-red-500 px-1.5 py-1 bg-transparent border border-red-600 rounded-full flex flex-row items-center cursor-pointer hover:text-red-600 hover:border-red-600" id="remove1">Remove</a>
+                        </div>
+                    <% }) %>
+                </div>
+            </fieldset>
+        </div>
+
+        <!-- gap -->
+        <div class="border-b border-zinc-800 mb-5 pb-5"></div>
+
+        <!-- Achievements -->
+        <div class="">
+            <fieldset id="achievements-fieldset" class="p-4 rounded text-sm peacock peacockk bg-zinc-800 flex flex-col gap-2">
+                <legend class="flex gap-1">
+                    <p class="font-bold text-sm px-1.5 py-1 bg-green-600 rounded-lg flex flex-row items-center">Achievements</p>
+                    <a class="addmore font-semibold text-sm px-1.5 bg-blue-600 rounded-full flex flex-row items-center cursor-pointer hover:bg-blue-700" id="addmore2">Add More</a>
+                </legend>
+                <div class="flex items-center gap-2">
+                    <% user.achievements.forEach((achievement, index) => { %>
+                        <label for="achievements[<%= index %>][achievement]" class="text-sm">Achievement</label>
+                        <input type="text" id="achievement" name="achievements[<%= index %>][achievement]" value="<%= achievement.achievement %>" placeholder="Enter achievement"
+                            class="w-72 bg-zinc-700 text-gray-400 px-3 py-2 border border-zinc-600 rounded-lg focus:outline-none focus:border-zinc-400">
+                        <label for="achievements[<%= index %>][description]" class="text-sm">Description</label>
+                        <textarea id="description" name="achievements[<%= index %>][description]" placeholder="Tell more about it"
+                            class="resize-none w-full bg-zinc-700 text-gray-400 px-3 py-2 border border-zinc-600 rounded-lg focus:outline-none focus:border-zinc-400"><%= achievement.description %></textarea>
+                        <a class="remove font-semibold text-sm text-red-500 px-1.5 py-1 bg-transparent border border-red-600 rounded-full flex flex-row items-center cursor-pointer hover:text-red-600 hover:border-red-600" id="remove2">Remove</a>
+                    <% }) %>
+                </div>
+            </fieldset>
+        </div>
+
+        <!-- gap -->
+        <div class="border-b border-zinc-800 mb-5 pb-5"></div>
+
+        <!-- Projects -->
+        <% user.projects.forEach((project, index) => { %>
+            <fieldset class="p-4 rounded text-sm peacock peacockk bg-zinc-800 flex flex-col gap-2">
+                <legend class="font-bold text-sm px-1.5 py-1 bg-green-600 rounded-lg">Project <%= index+1 %>
+                </legend>
+                <div class="flex items-center gap-2">
+                    <label for="projects[<%= index %>][projectName]" class="text-sm">Name</label>
+                    <input type="text" id="projectName" name="projects[<%= index %>][projectName]" value="<%= project.projectName %>"
+                        placeholder="Enter project name"
+                        class="w-72 bg-zinc-700 text-gray-400 px-3 py-2 border border-zinc-600 rounded-lg focus:outline-none focus:border-zinc-400">
+                    <label for="projects[<%= index %>][projectAbout]" class="text-sm">About</label>
+                    <textarea id="projectAbout" name="projects[<%= index %>][projectAbout]"
+                        placeholder="Describe your project"
+                        class="resize-none w-full bg-zinc-700 text-gray-400 px-3 py-2 border border-zinc-600 rounded-lg focus:outline-none focus:border-zinc-400"><%= project.projectAbout %></textarea>
+                </div>
+                <div class="links flex items-center gap-2">
+                    <label for="projects[<%= index %>][githublink]" class="text-sm">Repo Link</label>
+                    <input type="text" id="githublink" name="projects[<%= index %>][githublink]" value="<%= project.githublink %>"
+                        placeholder="Enter GitHub link"
+                        class="w-72 bg-zinc-700 text-gray-400 px-3 py-2 border border-zinc-600 rounded-lg focus:outline-none focus:border-zinc-400">
+                    <label for="projects[<%= index %>][demo]" class="text-sm">Demo</label>
+                    <input type="text" id="demo" name="projects[<%= index %>][demo]" value="<%= project.demo %>" placeholder="Demo Link (if any)"
+                        class="w-72 bg-zinc-700 text-gray-400 px-3 py-2 border border-zinc-600 rounded-lg focus:outline-none focus:border-zinc-400">
+                </div>
+            </fieldset>
+            <% }) %>
+
+        <!-- gap -->
+        <div class="border-b border-zinc-800 mb-5 pb-5"></div>
+
+        <!-- Internships -->
+<h2 class="text-xl font-semibold mb-2">Internships</h2>
+<% user.internships.forEach((internship, index) => { %>
+    <fieldset class="p-4 rounded text-sm peacock peacockk bg-zinc-800 flex flex-col gap-2">
+        <legend class="font-bold text-sm px-1.5 py-1 bg-green-600 rounded-lg">Internship <%= index + 1 %></legend>
+        <div class="flex items-center gap-2">
+            <label for="internships_<%= index %>_company" class="text-sm">Company Name</label>
+            <input type="text" id="internships_<%= index %>_company" name="internships[<%= index %>][internshipCompany]"
+                value="<%= internship.internshipCompany %>"
+                placeholder="Enter company name"
+                class="w-72 bg-zinc-700 text-gray-400 px-3 py-2 border border-zinc-600 rounded-lg focus:outline-none focus:border-zinc-400">
+            <label for="internships_<%= index %>_duration" class="text-sm">Duration</label>
+            <input type="text" id="internships_<%= index %>_duration" name="internships[<%= index %>][internshipDuration]"
+                value="<%= internship.internshipDuration %>"
+                placeholder="Enter duration (e.g., 6 months)"
+                class="w-72 bg-zinc-700 text-gray-400 px-3 py-2 border border-zinc-600 rounded-lg focus:outline-none focus:border-zinc-400">
+        </div>
+        <div class="flex items-center gap-2">
+            <label for="internships_<%= index %>_skills" class="text-sm">Skills Used</label>
+            <input type="text" id="internships_<%= index %>_skills" name="internships[<%= index %>][internshipSkills]"
+                value="<%= internship.internshipSkills %>"
+                placeholder="Enter skills used (e.g., HTML, CSS, JavaScript)"
+                class="w-72 bg-zinc-700 text-gray-400 px-3 py-2 border border-zinc-600 rounded-lg focus:outline-none focus:border-zinc-400">
+            <label for="internships_<%= index %>_certificate" class="text-sm">Certificate Link</label>
+            <input type="text" id="internships_<%= index %>_certificate" name="internships[<%= index %>][internshipCertificate]"
+                value="<%= internship.internshipCertificate %>"
+                placeholder="Enter certificate link (if any)"
+                class="w-72 bg-zinc-700 text-gray-400 px-3 py-2 border border-zinc-600 rounded-lg focus:outline-none focus:border-zinc-400">
+        </div>
+    </fieldset>
+<% }) %>
+
+<!-- gap -->
+<div class="border-b border-zinc-800 mb-5 pb-5"></div>
+
+<!-- Platforms -->
+<h2 class="text-xl font-semibold mb-2">Platforms</h2>
+<% user.platforms.forEach((platform, index) => { %>
+    <fieldset class="p-4 rounded text-sm peacock peacockk bg-zinc-800 flex flex-col gap-2">
+        <legend class="font-bold text-sm px-1.5 py-1 bg-green-600 rounded-lg"><%= platform.platform %></legend>
+        <div class="flex items-center gap-2">
+            <label for="platforms_<%= index %>_username" class="text-sm"><%= platform.platform %></label>
+            <input type="text" id="platforms_<%= index %>_username" name="platforms[<%= index %>][username]"
+                value="<%= platform.username %>"
+                placeholder="Enter username for <%= platform.platform %>"
+                class="w-72 bg-zinc-700 text-gray-400 px-3 py-2 border border-zinc-600 rounded-lg focus:outline-none focus:border-zinc-400">
+            <input type="hidden" name="platforms[<%= index %>][platform]" value="<%= platform.platform %>">
+        </div>
+    </fieldset>
+<% }) %>
+
+<!-- gap -->
+<div class="border-b border-zinc-800 mb-5 pb-5"></div>
+
+<fieldset class="p-4 rounded text-sm peacock peacockk bg-zinc-800 flex flex-col gap-2">
+    <legend class="font-bold text-sm px-1.5 py-1 bg-green-600 rounded-lg">Contact</legend>
+    <div class="flex items-center gap-2">
+        <label for="email" class="text-sm">Email</label>
+        <input type="email" id="email" name="email" value="<%= user.email %>"
+            placeholder="Enter your email"
+            class="w-72 bg-zinc-700 text-gray-400 px-3 py-2 border border-zinc-600 rounded-lg focus:outline-none focus:border-zinc-400">
+    </div>
+</fieldset>
+
+<!-- gap -->
+<div class="border-b border-zinc-800 mb-5 pb-5"></div>
+
+<fieldset class="p-4 rounded text-sm peacock peacockk bg-zinc-800 flex flex-col gap-2">
+    <legend class="font-bold text-sm px-1.5 py-1 bg-green-600 rounded-lg">Password</legend>
+    <div class="flex items-center gap-2">
+        <label for="password" class="text-sm">Password</label>
+        <input type="password" id="password" name="password" value="<%= user.password %>"
+            placeholder="Set your password"
+            class="w-72 bg-zinc-700 text-gray-400 px-3 py-2 border border-zinc-600 rounded-lg focus:outline-none focus:border-zinc-400">
+    </div>
+</fieldset>
+
+        <button type="submit" class="px-3 py-2 bg-blue-500 rounded-lg hover:bg-blue-600">Submit</button>
+    </form>
+
+    <!-- footer -->
+    <h5 class="flex flex-col justify-center items-center px-4.5 py-3">&copy; Peacock</h5>
+
+    <script>
+        document.getElementById('addmore1').addEventListener('click', function() {
+            const fieldset = document.getElementById('technical-skills-fieldset');
+            const div = document.createElement('div');
+            div.className = 'flex items-center gap-2';
+            div.innerHTML = `
+                <label for="skill" class="text-sm">Skill</label>
+                <input type="text" id="skill" name="skill" placeholder="Enter skill"
+                    class="w-72 bg-zinc-700 text-gray-400 px-3 py-2 border border-zinc-600 rounded-lg focus:outline-none focus:border-zinc-400">
+                <label for="proficiency" class="text-sm">Proficiency</label>
+                <input type="number" id="proficiency" name="proficiency" placeholder="Proficiency (out of 10)"
+                    class="w-72 bg-zinc-700 text-gray-400 px-3 py-2 border border-zinc-600 rounded-lg focus:outline-none focus:border-zinc-400">
+                <a class="remove font-semibold text-sm text-red-500 px-1.5 py-1 bg-transparent border border-red-600 rounded-full flex flex-row items-center cursor-pointer hover:text-red-600 hover:border-red-600" id="remove1">Remove</a>
+            `;
+            fieldset.appendChild(div);
+            attachRemoveEvent(div.querySelector('.remove'));
+        });
+
+        document.getElementById('addmore2').addEventListener('click', function() {
+            const fieldset = document.getElementById('achievements-fieldset');
+            const div = document.createElement('div');
+            div.className = 'flex items-center gap-2';
+            div.innerHTML = `
+                <label for="achievement" class="text-sm">Achievement</label>
+                <input type="text" id="achievement" name="achievement" placeholder="Enter achievement"
+                    class="w-72 bg-zinc-700 text-gray-400 px-3 py-2 border border-zinc-600 rounded-lg focus:outline-none focus:border-zinc-400">
+                <label for="description" class="text-sm">Description</label>
+                <textarea id="description" name="description" placeholder="Tell more about it"
+                    class="resize-none w-full bg-zinc-700 text-gray-400 px-3 py-2 border border-zinc-600 rounded-lg focus:outline-none focus:border-zinc-400"></textarea>
+                <a class="remove font-semibold text-sm text-red-500 px-1.5 py-1 bg-transparent border border-red-600 rounded-full flex flex-row items-center cursor-pointer hover:text-red-600 hover:border-red-600" id="remove2">Remove</a>
+            `;
+            fieldset.appendChild(div);
+            attachRemoveEvent(div.querySelector('.remove'));
+        });
+
+        function attachRemoveEvent(button) {
+            button.addEventListener('click', function() {
+                this.parentElement.remove();
+            });
+        }
+
+        // Attach remove event to existing remove buttons
+        document.querySelectorAll('.remove').forEach(button => {
+            attachRemoveEvent(button);
+        });
+    </script>
+</body>
+
+</html>

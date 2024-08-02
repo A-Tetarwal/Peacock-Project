@@ -97,11 +97,11 @@ app.post('/builder', upload.single('image'), async (req, res) => {
         }
 
         // Process achievements
-        if (formData.achievement && formData.description) {
-          user.achievements.push({
-            achievement: formData.achievement,
-            description: formData.description
-          });
+        if (Array.isArray(formData.achievement) && Array.isArray(formData.description)) {
+          user.achievements = formData.achievement.map((ach, index) => ({
+            achievement: ach,
+            description: formData.description[index]
+          }));
         }
 
         // Process projects
@@ -155,7 +155,7 @@ app.post('/builder', upload.single('image'), async (req, res) => {
 
     // Send a response
     // res.status(200).send({ message: 'User created successfully', user: newUser });
-    res.redirect(`/portfolio/${newUser.name}`,{ user:newUser });
+    res.redirect({ user:newUser }, `/portfolio/${newUser.name}`);
   } catch (error) {
     // Ensure only one response is sent
     if (!res.headersSent) {
@@ -178,6 +178,98 @@ app.get('/portfolio/:name', async (req, res) => {
   } catch (error) {
     console.error('Error fetching user:', error);
     res.status(500).send({ message: 'Error fetching user', error: error.message });
+  }
+});
+
+app.get('/portfolio/edit/:name', async (req, res) => {
+  const user = await userModel.findOne({ name: req.params.name });
+  res.render('edit', {user})
+})
+
+app.post('/edit/:name', upload.single('image'), async (req, res) => {
+  try {
+    console.log('Received form data:', req.body);
+
+    // Find the user by name
+    const user = await userModel.findOne({ name: req.params.name });
+
+    // Check if user exists
+    if (!user) {
+      return res.status(404).send('User not found');
+    }
+
+    // Update user fields with the form data
+    user.name = req.body.name || user.name;
+    user.oneliner = req.body.oneliner || user.oneliner;
+    user.about = req.body.about || user.about;
+    user.institution = req.body.institution || user.institution;
+    user.grades = req.body.grades || user.grades;
+
+    // Update technical skills
+    if (Array.isArray(req.body.skill) && Array.isArray(req.body.proficiency)) {
+      user.technicalSkills = req.body.skill.map((s, index) => ({
+        skill: s,
+        proficiency: Number(req.body.proficiency[index]) || null
+      }));
+    }
+
+    // Update achievements
+    if (Array.isArray(req.body.achievement) && Array.isArray(req.body.description)) {
+      user.achievements = req.body.achievement.map((ach, index) => ({
+        achievement: ach,
+        description: req.body.description[index]
+      }));
+    }
+
+    // Update projects
+    if (Array.isArray(req.body.projects)) {
+      user.projects = req.body.projects.map(project => ({
+        projectName: project.projectName || '',
+        projectAbout: project.projectAbout || '',
+        githublink: project.githublink || '',
+        demo: project.demo || ''
+      }));
+    }
+
+    // Update internships
+    if (Array.isArray(req.body.internships)) {
+      user.internships = req.body.internships.map(internship => ({
+        internshipCompany: internship.internshipCompany || '',
+        internshipDuration: internship.internshipDuration || '',
+        internshipSkills: internship.internshipSkills || '',
+        internshipCertificate: internship.internshipCertificate || ''
+      }));
+    }
+
+    // Update platforms
+    if (Array.isArray(req.body.platforms)) {
+      user.platforms = req.body.platforms.map(platform => ({
+        platform: platform.platform || '',
+        username: platform.username || ''
+      }));
+    }
+
+    // Update contact info
+    user.email = req.body.email || user.email;
+    
+    // Update password (ensure proper hashing if necessary)
+    user.password = req.body.password || user.password;
+
+    // Handle file upload if a new file is provided
+    if (req.file) {
+      user.profilepic = req.file.path; // Update profile picture path
+    }
+
+    // Save the updated user
+    await user.save();
+
+    console.log('User updated successfully:', user);
+
+    // Redirect to the portfolio page
+    res.redirect(`/portfolio/${req.params.name}`);
+  } catch (err) {
+    console.error('Error updating user:', err);
+    res.status(500).send('Server Error');
   }
 });
 

@@ -6,37 +6,39 @@
   <title><%= user.name %>'s Portfolio</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <style>
-    .peacockk {
+    .hover-effect {
       transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
     }
 
-    .peacockk:hover {
-      transform: scale(1.01);
-      box-shadow:2.5px 2.5px 0px 0px #505050;
+    .hover-effect:hover {
+      transform: scale(1.02);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     }
   </style>
 </head>
 <body class="bg-gray-900 text-gray-100">
+
   <!-- Header -->
-  <header class="bg-gray-800 text-white py-6">
-    <div class="flex justify-center items-center gap-10">
-      <div class="nameabout flex flex-col items-center">
-        <h1 class="text-4xl font-bold text-center"><%= user.name %></h1>
-        <p class="mt-2 text-lg text-center"><%= user.about %></p>
+  <header class="bg-gray-800 text-white py-8">
+    <div class="container mx-auto flex flex-col md:flex-row items-center justify-center gap-8 px-4">
+      <img src="/images/uploads/22725a21211af408c25aa17d.jpg" alt="<%= user.name %>'s Profile Picture" class="w-32 h-32 rounded-full border-4 border-gray-700 hover:opacity-90 transition-opacity duration-300">
+      <div class="text-center md:text-left">
+        <h1 class="text-4xl font-bold mb-2"><%= user.name %></h1>
+        <p class="text-lg mb-4"><%= user.oneliner %></p>
+        <p class="text-gray-400 max-w-md mx-auto md:mx-0"><%= user.about %></p>
       </div>
-      <img src="/images/uploads/22725a21211af408c25aa17d.jpg" alt="<%= user.name %>'s Profile Picture" class="w-32 h-32 rounded-xl">
     </div>
   </header>
 
   <!-- Main Content -->
   <main class="container mx-auto px-4 py-8">
     <!-- Technical Skills -->
-    <section id="technical-skills" class="bg-gray-800 px-6 py-4 rounded-lg peacockk m-3">
+    <section id="technical-skills" class="bg-gray-800 px-6 py-6 rounded-lg hover-effect mb-6">
       <h2 class="text-2xl font-semibold mb-4">Technical Skills</h2>
       <% if (user.technicalSkills.length > 0) { %>
-        <div class="px-5 flex">
+        <div class="flex flex-wrap gap-3">
           <% user.technicalSkills.forEach(skill => { %>
-            <p class="text-sm bg-gray-700 px-1.5 py-1 rounded hover:bg-gray-600 cursor-pointer"><strong><%= skill.skill %></strong>: <%= skill.proficiency %>/10</p>
+            <p class="bg-gray-700 px-3 py-1 rounded text-sm font-medium hover:bg-gray-600 cursor-pointer"><strong><%= skill.skill %></strong>: <%= skill.proficiency %>/10</p>
           <% }) %>
         </div>
       <% } else { %>
@@ -45,12 +47,12 @@
     </section>
 
     <!-- Achievements -->
-    <section id="achievements" class="bg-gray-800 px-6 py-4 rounded-lg peacockk m-3">
+    <section id="achievements" class="bg-gray-800 px-6 py-6 rounded-lg hover-effect mb-6">
       <h2 class="text-2xl font-semibold mb-4">Achievements</h2>
       <% if (user.achievements.length > 0) { %>
-        <div class="list-disc pl-5">
+        <div class="flex flex-col gap-3">
           <% user.achievements.forEach(achievement => { %>
-            <p class="text-sm bg-gray-700 px-1.5 py-1 rounded hover:bg-gray-600 cursor-pointer">
+            <p class="bg-gray-700 px-3 py-1 rounded text-sm font-medium hover:bg-gray-600 cursor-pointer">
               <strong><%= achievement.achievement %></strong>: <%= achievement.description %>
             </p>
           <% }) %>
@@ -61,22 +63,22 @@
     </section>
 
     <!-- Projects -->
-    <section id="projects" class="bg-gray-900 px-6 py-4 m-3">
+    <section id="projects" class="bg-gray-900 px-6 py-6 rounded-lg hover-effect mb-6">
       <h2 class="text-2xl font-semibold mb-4">Projects</h2>
       <% if (user.projects.length > 0) { %>
-        <div class="flex justify-center gap-3">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <% user.projects.forEach(project => { %>
-            <div class="flex flex-col justify-between px-3 py-3 flex-wrap w-72 bg-gray-800 rounded-lg peacockk cursor-pointer">
-              <img src="/images/projects/projectdefault.jpg" alt="<%= project.projectName %>" class="w-68 h-68 rounded-lg">
-              <div class="proj">
-                <h3 class="text-2xl font-medium"><%= project.projectName %></h3>
-                <p class="text-sm h-14 overflow-hidden tracking-tighter"><%= project.projectAbout %></p>
-              </div>
-              <div class="buttons flex justify-between py-2 mt-1.5">
-                <p><a href="<%= project.githublink %>" target="_blank" class="text-white bg-green-600 px-1.5 py-1 rounded hover:bg-green-700">GitHub Link</a></p>
-                <% if (project.demo) { %>
-                  <p><a href="<%= project.demo %>" target="_blank" class="text-white bg-green-600 px-1.5 py-1 rounded hover:bg-green-700">Demo</a></p>
-                <% } %>
+            <div class="bg-gray-800 rounded-lg overflow-hidden hover-effect">
+              <img src="/images/projects/projectdefault.jpg" alt="<%= project.projectName %>" class="w-full h-40 object-cover">
+              <div class="p-4">
+                <h3 class="text-xl font-medium mb-2"><%= project.projectName %></h3>
+                <p class="text-sm h-16 overflow-hidden mb-2"><%= project.projectAbout %></p>
+                <div class="flex gap-2">
+                  <a href="<%= project.githublink %>" target="_blank" class="bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700">GitHub Link</a>
+                  <% if (project.demo) { %>
+                    <a href="<%= project.demo %>" target="_blank" class="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700">Demo</a>
+                  <% } %>
+                </div>
               </div>
             </div>
           <% }) %>
@@ -87,19 +89,19 @@
     </section>
 
     <!-- Internships -->
-    <section id="internships" class="mb-8">
-      <h2 class="text-3xl font-semibold mb-4">Internships</h2>
+    <section id="internships" class="bg-gray-900 px-6 py-6 rounded-lg hover-effect mb-6">
+      <h2 class="text-2xl font-semibold mb-4">Internships</h2>
       <% if (user.internships.length > 0) { %>
-        <div class="list-disc pl-5">
+        <div class="flex flex-col gap-6">
           <% user.internships.forEach(internship => { %>
-            <p class="mb-4">
+            <div class="bg-gray-800 p-4 rounded-lg hover-effect">
               <strong><%= internship.internshipCompany %></strong>
-              <p>Duration: <%= internship.internshipDuration %></p>
-              <p>Skills: <%= internship.internshipSkills %></p>
+              <p class="text-sm">Duration: <%= internship.internshipDuration %></p>
+              <p class="text-sm">Skills Used: <%= internship.internshipSkills %></p>
               <% if (internship.internshipCertificate) { %>
-                <p><a href="<%= internship.internshipCertificate %>" target="_blank" class="text-blue-400 underline">Certificate</a></p>
+                <a href="<%= internship.internshipCertificate %>" target="_blank" class="text-white bg-green-600 px-3 py-1 rounded hover:bg-green-700">Certificate</a>
               <% } %>
-            </p>
+            </div>
           <% }) %>
         </div>
       <% } else { %>
@@ -108,12 +110,12 @@
     </section>
 
     <!-- Platforms -->
-    <section id="platforms">
-      <h2 class="text-3xl font-semibold mb-4">Platforms</h2>
+    <section id="platforms" class="bg-gray-800 px-6 py-6 rounded-lg hover-effect mb-6">
+      <h2 class="text-2xl font-semibold mb-4">Platforms</h2>
       <% if (user.platforms.length > 0) { %>
-        <div class="list-disc pl-5">
+        <div class="flex flex-wrap gap-3">
           <% user.platforms.forEach(platform => { %>
-            <p class="text-lg bg-gray-700 px-1.5 py-1 rounded"><strong><%= platform.platform %></strong>: <%= platform.username %></p>
+            <a href="<%= platform.username %>" class="bg-gray-700 px-4 py-2 rounded text-sm font-medium hover:bg-gray-600" target="_blank"><strong><%= platform.platform %></strong></a>
           <% }) %>
         </div>
       <% } else { %>
@@ -123,10 +125,12 @@
   </main>
 
   <!-- Footer -->
-  <footer class="bg-gray-800 text-gray-300 py-4">
-    <div class="container mx-auto px-4 text-center">
+  <footer class="bg-gray-800 text-gray-300 py-6">
+    <div class="container mx-auto flex flex-col items-center gap-2 px-4">
+      <a href="edit/<%= user.name %>" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Edit</a>
       <p>Contact: <a href="mailto:<%= user.email %>" class="text-blue-400 underline"><%= user.email %></a></p>
     </div>
   </footer>
+
 </body>
 </html>
