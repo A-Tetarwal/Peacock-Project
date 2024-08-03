@@ -92,7 +92,7 @@
                             <input type="text" id="skill" name="technicalSkills[<%= index %>][skill]" value="<%= skill.skill %>" placeholder="Enter skill"
                                 class="w-72 bg-zinc-700 text-gray-400 px-3 py-2 border border-zinc-600 rounded-lg focus:outline-none focus:border-zinc-400">
                             <label for="technicalSkills[<%= index %>][proficiency]" class="text-sm">Proficiency</label>
-                            <input type="number" id="proficiency" for="technicalSkills[<%= index %>][proficiency]" value="<%= skill.proficiency %>" placeholder="Proficiency (out of 10)"
+                            <input type="number" id="proficiency" name="technicalSkills[<%= index %>][proficiency]" value="<%= skill.proficiency %>" placeholder="Proficiency (out of 10)"
                                 class="w-72 bg-zinc-700 text-gray-400 px-3 py-2 border border-zinc-600 rounded-lg focus:outline-none focus:border-zinc-400">
                             <a class="remove font-semibold text-sm text-red-500 px-1.5 py-1 bg-transparent border border-red-600 rounded-full flex flex-row items-center cursor-pointer hover:text-red-600 hover:border-red-600" id="remove1">Remove</a>
                         </div>
@@ -244,14 +244,15 @@
     <script>
         document.getElementById('addmore1').addEventListener('click', function() {
             const fieldset = document.getElementById('technical-skills-fieldset');
+            const count = fieldset.querySelectorAll('.flex.items-center.gap-2').length;
             const div = document.createElement('div');
             div.className = 'flex items-center gap-2';
             div.innerHTML = `
                 <label for="skill" class="text-sm">Skill</label>
-                <input type="text" id="skill" name="skill" placeholder="Enter skill"
+                <input type="text" id="skill" name="technicalSkills[${count}][skill]" placeholder="Enter skill"
                     class="w-72 bg-zinc-700 text-gray-400 px-3 py-2 border border-zinc-600 rounded-lg focus:outline-none focus:border-zinc-400">
                 <label for="proficiency" class="text-sm">Proficiency</label>
-                <input type="number" id="proficiency" name="proficiency" placeholder="Proficiency (out of 10)"
+                <input type="number" id="proficiency" name="technicalSkills[${count}][proficiency]" placeholder="Proficiency (out of 10)"
                     class="w-72 bg-zinc-700 text-gray-400 px-3 py-2 border border-zinc-600 rounded-lg focus:outline-none focus:border-zinc-400">
                 <a class="remove font-semibold text-sm text-red-500 px-1.5 py-1 bg-transparent border border-red-600 rounded-full flex flex-row items-center cursor-pointer hover:text-red-600 hover:border-red-600" id="remove1">Remove</a>
             `;
@@ -261,14 +262,15 @@
 
         document.getElementById('addmore2').addEventListener('click', function() {
             const fieldset = document.getElementById('achievements-fieldset');
+            const count = fieldset.querySelectorAll('.flex.items-center.gap-2').length;
             const div = document.createElement('div');
             div.className = 'flex items-center gap-2';
             div.innerHTML = `
                 <label for="achievement" class="text-sm">Achievement</label>
-                <input type="text" id="achievement" name="achievement" placeholder="Enter achievement"
+                <input type="text" id="achievement" name="achievements[${count}][achievement]" placeholder="Enter achievement"
                     class="w-72 bg-zinc-700 text-gray-400 px-3 py-2 border border-zinc-600 rounded-lg focus:outline-none focus:border-zinc-400">
                 <label for="description" class="text-sm">Description</label>
-                <textarea id="description" name="description" placeholder="Tell more about it"
+                <textarea id="description" name="achievements[${count}][description]" placeholder="Tell more about it"
                     class="resize-none w-full bg-zinc-700 text-gray-400 px-3 py-2 border border-zinc-600 rounded-lg focus:outline-none focus:border-zinc-400"></textarea>
                 <a class="remove font-semibold text-sm text-red-500 px-1.5 py-1 bg-transparent border border-red-600 rounded-full flex flex-row items-center cursor-pointer hover:text-red-600 hover:border-red-600" id="remove2">Remove</a>
             `;

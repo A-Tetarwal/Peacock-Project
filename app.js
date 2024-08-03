@@ -7,7 +7,6 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const upload = require('./configs/multerconfig');
 const userModel = require('./models/user');  // Ensure the correct model is imported
-const { platform } = require('os');
 
 
 const app = express();
@@ -89,18 +88,18 @@ app.post('/builder', upload.single('image'), async (req, res) => {
         };
 
         // Process technical skills
-        if (Array.isArray(formData.skill) && Array.isArray(formData.proficiency)) {
-          user.technicalSkills = formData.skill.map((s, index) => ({
-            skill: s,
-            proficiency: Number(formData.proficiency[index]) || null
+        if (Array.isArray(formData.technicalSkills)) {
+          user.technicalSkills = formData.technicalSkills.map(skillObj => ({
+            skill: skillObj.skill || '',
+            proficiency: Number(skillObj.proficiency) || null
           }));
         }
 
         // Process achievements
-        if (Array.isArray(formData.achievement) && Array.isArray(formData.description)) {
-          user.achievements = formData.achievement.map((ach, index) => ({
-            achievement: ach,
-            description: formData.description[index]
+        if (Array.isArray(formData.achievements)) {
+          user.achievements = formData.achievements.map(achievementObj => ({
+            achievement: achievementObj.achievement || '',
+            description: achievementObj.description || ''
           }));
         }
 
@@ -206,18 +205,18 @@ app.post('/edit/:name', upload.single('image'), async (req, res) => {
     user.grades = req.body.grades || user.grades;
 
     // Update technical skills
-    if (Array.isArray(req.body.skill) && Array.isArray(req.body.proficiency)) {
-      user.technicalSkills = req.body.skill.map((s, index) => ({
-        skill: s,
-        proficiency: Number(req.body.proficiency[index]) || null
+    if (Array.isArray(req.body.technicalSkills)) {
+      user.technicalSkills = req.body.technicalSkills.map(skillObj => ({
+        skill: skillObj.skill || '',
+        proficiency: Number(skillObj.proficiency) || null
       }));
     }
 
     // Update achievements
-    if (Array.isArray(req.body.achievement) && Array.isArray(req.body.description)) {
-      user.achievements = req.body.achievement.map((ach, index) => ({
-        achievement: ach,
-        description: req.body.description[index]
+    if (Array.isArray(req.body.achievements)) {
+      user.achievements = req.body.achievements.map(achievementObj => ({
+        achievement: achievementObj.achievement || '',
+        description: achievementObj.description || ''
       }));
     }
 
