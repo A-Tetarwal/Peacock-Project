@@ -4,34 +4,83 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title><%= user.name %>'s Portfolio</title>
+  <link rel="icon" href= "/images/Peacock 2.svg"/>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <style>
     .hover-effect {
       transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
     }
-
     .hover-effect:hover {
       transform: scale(1.02);
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     }
+
+    .hover-effect2 {
+      transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    }
+    .hover-effect2:hover {
+      transform: scale(1.09);
+      box-shadow:0px 0px 8px 6px rgba(113, 53, 254, 0.2);
+    }
+
+    .custom-height {
+    height: calc(100vh - 6rem); /* Adjust 6rem based on your header height */
+    }
+
+    @keyframes moveRandom {
+      0% {
+        transform: translate(0, 0);
+      }
+      100% {
+        transform: translate(var(--x), var(--y));
+      }
+    }
+
+    .circle {
+      animation: moveRandom infinite alternate;
+    }
   </style>
+  <script src="https://kit.fontawesome.com/448ef05f9d.js" crossorigin="anonymous"></script>
 </head>
-<body class="bg-gray-900 text-gray-100">
+<body class="bg-gray-900 text-gray-100 px-10">
 
   <!-- Header -->
-  <header class="bg-gray-800 text-white py-8">
-    <div class="container mx-auto flex flex-col md:flex-row items-center justify-center gap-8 px-4">
-      <img src="/images/uploads/22725a21211af408c25aa17d.jpg" alt="<%= user.name %>'s Profile Picture" class="w-32 h-32 rounded-full border-4 border-gray-700 hover:opacity-90 transition-opacity duration-300">
-      <div class="text-center md:text-left">
-        <h1 class="text-4xl font-bold mb-2"><%= user.name %></h1>
-        <p class="text-lg mb-4"><%= user.oneliner %></p>
-        <p class="text-gray-400 max-w-md mx-auto md:mx-0"><%= user.about %></p>
-      </div>
+  <header class="text-white py-6 mb-6 flex justify-between">
+    <a href="" class="text-lg">J.D. Portfolio</a>
+    <div class="flex gap-4">
+      <a href="#projects">Projects</a>
+      <a href="#technical-skills">Skills</a>
+      <a href="#platforms">Connect</a>
     </div>
   </header>
 
+  <div class="container mx-auto flex flex-col md:flex-row items-center justify-center gap-8 px-4 custom-height">
+    <div class="text-center md:text-left">
+      <h1 class="text-4xl font-bold mb-2 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 via-pink-500 to-blue-500">
+        Hello, I'm <%= user.name %>
+      </h1>
+      <p class="text-lg mb-4"><%= user.oneliner %></p>
+      <p class="text-gray-400 max-w-md mx-auto md:mx-0"><%= user.about %></p>
+      <button id="proceedButton" class="mt-5 px-3 py-2 rounded-full bg-gradient-to-r from-purple-400 via-violet-600 to-blue-600 hover-effect2">Proceed &rightarrow;</button>
+    </div>
+    <div class="relative w-48 h-48">
+      <!-- Large Circular Border Design (behind the image) -->
+      <div class="absolute w-56 h-56 bg-gradient-to-r from-purple-400 via-pink-500 to-blue-500 rounded-full opacity-40 z-[-2] -translate-x-18 -translate-y-18 circle"></div>
+      
+      <!-- Smaller Filled Circular Design (on top of the image) -->
+      <div class="absolute bottom-0 right-0 w-24 h-24 bg-gradient-to-r from-purple-400 via-pink-500 to-blue-500 rounded-full opacity-50 z-[-1] -translate-x-6 -translate-y-6 circle"></div>
+      
+      <!-- Image with Gradient Border -->
+      <div class="absolute inset-0 rounded-full bg-gradient-to-r from-purple-400 via-pink-500 to-blue-500 p-1">
+        <div class="w-full h-full bg-white rounded-full">
+          <img src="<%= user.profilepic %>" alt="<%= user.name %>'s Profile Picture" class="w-full h-full object-cover rounded-full">
+        </div>
+      </div>
+    </div>    
+  </div>
+
   <!-- Main Content -->
-  <main class="container mx-auto px-4 py-8">
+  <main id="main" class="container mx-auto px-4 py-8">
     <!-- Technical Skills -->
     <section id="technical-skills" class="bg-gray-800 px-6 py-6 rounded-lg hover-effect mb-6">
       <h2 class="text-2xl font-semibold mb-4">Technical Skills</h2>
@@ -131,6 +180,26 @@
       <p>Contact: <a href="mailto:<%= user.email %>" class="text-blue-400 underline"><%= user.email %></a></p>
     </div>
   </footer>
+<script>
+  document.getElementById('proceedButton').addEventListener('click', function() {
+    var navDiv = document.getElementById('main');
+    // Scroll to the nav div
+    navDiv.scrollIntoView({ behavior: 'smooth' });
+  });
 
+  // Animation
+  document.addEventListener('DOMContentLoaded', () => {
+    const circles = document.querySelectorAll('.circle');
+    circles.forEach(circle => {
+      const randomX = Math.floor(Math.random() * 200) ; // Random X offset between -100px and 100px
+      const randomY = Math.floor(Math.random() * 200) ; // Random Y offset between -100px and 100px
+      const duration = Math.random() * 10 + 5; // Random duration between 5s and 15s
+
+      circle.style.setProperty('--x', `${randomX}px`);
+      circle.style.setProperty('--y', `${randomY}px`);
+      circle.style.animationDuration = `${duration}s`;
+    });
+  });
+</script>
 </body>
 </html>

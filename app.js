@@ -154,7 +154,7 @@ app.post('/builder', upload.single('image'), async (req, res) => {
 
     // Send a response
     // res.status(200).send({ message: 'User created successfully', user: newUser });
-    res.redirect({ user:newUser }, `/portfolio/${newUser.name}`);
+    res.redirect(`/portfolio/${newUser.name}`);
   } catch (error) {
     // Ensure only one response is sent
     if (!res.headersSent) {
@@ -256,8 +256,10 @@ app.post('/edit/:name', upload.single('image'), async (req, res) => {
 
     // Handle file upload if a new file is provided
     if (req.file) {
-      user.profilepic = req.file.path; // Update profile picture path
+      user.profilepic = req.file.path.replace('public', ''); // Update profile picture path
+      console.log(user.profilepic);
     }
+       
 
     // Save the updated user
     await user.save();
