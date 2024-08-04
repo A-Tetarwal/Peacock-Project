@@ -84,7 +84,7 @@ app.post('/builder', upload.single('image'), async (req, res) => {
           platforms: [],
           email: formData.email,
           password: formData.password,
-          profilepic: formData.profilepic || 'default.jpg'
+          profilepic: req.file.path.replace('public', '') || 'default.jpg' // Update profile picture path
         };
 
         // Process technical skills

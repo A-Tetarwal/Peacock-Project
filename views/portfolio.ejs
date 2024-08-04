@@ -71,7 +71,8 @@
 <body class="bg-gray-900 text-gray-100 px-10">
   <!-- Header -->
   <header class="text-white py-6 mb-6 flex justify-between">
-    <a href="" class="text-lg font-semibold">J.D. Portfolio</a>
+    <a href="" class="text-lg font-semibold">
+      <%= user.name.split(' ').map(word => word.charAt(0).toUpperCase() + '.').join('') %> Portfolio</a>
     <div class="flex gap-4 font-semibold">
       <a href="#projects">Projects</a>
       <a href="#technical-skills">Skills</a>
@@ -110,7 +111,7 @@
     <section id="internships" class="px-6 py-6 mb-6">
       <h2 class="text-2xl font-semibold mb-4">Internships</h2>
       <% if (user.internships.length > 0) { %>
-        <div class="flex flex-wrap justify-evenly gap-6">
+        <div class="flex flex-wrap items-center gap-6">
           <% user.internships.forEach(internship => { %>
             <div class="bg-gray-800 rounded-lg overflow-hidden w-72 hover-effect">
               <div class="p-4">
@@ -129,11 +130,14 @@
       <% } %>
     </section>
 
+    <!-- gap -->
+    <div class="border-b border-gray-500 mb-10 pb-5"></div>
+
     <!-- Projects -->
-    <section id="projects" class="px-6 py-6 mb-6 h-screen">
+    <section id="projects" class="px-6 py-6 mb-6 h-auto">
       <h2 class="text-2xl font-semibold mb-4">Projects</h2>
       <% if (user.projects.length > 0) { %>
-        <div class="flex flex-wrap justify-evenly gap-6">
+        <div class="flex flex-wrap items-center gap-6">
           <% user.projects.forEach(project => { %>
             <div class="bg-gray-800 rounded-lg overflow-hidden w-72 hover-effect">
               <img src="/images/projects/projectdefault.jpg" alt="<%= project.projectName %>" class="w-full h-40 object-cover">
@@ -154,6 +158,9 @@
         <p class="text-gray-400">No projects listed.</p>
       <% } %>
     </section>
+
+    <!-- gap -->
+    <div class="border-b border-gray-500 mb-10 pb-5"></div>
 
     <!-- Technical Skills -->
     <section class="tech flex flex-col">
@@ -218,13 +225,22 @@
       <% } %>
     </section>
 
+    <!-- gap -->
+    <div class="border-b border-gray-500 mb-10 pb-5"></div>
 
     <!-- Footer -->
-    <footer class="bg-gray-800 text-gray-300 py-6">
-      <div class="container mx-auto flex flex-col items-center gap-4 px-4">
-        <a href="edit/<%= user.name %>" class="text-sm font-bold bg-gradient-to-r from-purple-400 via-pink-500 to-blue-500 text-white px-4 py-2 rounded-full hover:opacity-80 transition-opacity duration-300">Modify</a>
+    <footer class="">
+      <div class="container mx-auto flex flex-col items-center">
       </div>
     </footer>
+
+    <div class="peacock flex flex-col justify-center items-center gap-2">
+      <div class="modify flex gap-2">
+        <a href="edit/<%= user.name %>" class="text-sm font-bold bg-gradient-to-r from-purple-400 via-pink-500 to-blue-500 text-white px-4 py-2 rounded-full hover:opacity-80 transition-opacity duration-300">&#9998; Modify</a>
+        <a href="/customize" class="text-sm font-bold bg-gradient-to-r from-purple-400 via-pink-500 to-blue-500 text-white px-4 py-2 rounded-full">Get Personalized Portfolio 🜲</a>
+      </div>
+      <a href="https://github.com/A-Tetarwal/peacock-project" target="_blank" class="text-sm text-gray-400">Made with Peacock - <%= new Date().getFullYear() %></a>
+    </div>
   </main>
 
   <script>
