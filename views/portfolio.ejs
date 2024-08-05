@@ -19,7 +19,7 @@
       transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
     }
     .hover-effect2:hover {
-      transform: scale(1.09);
+      transform: scale(1.05);
       box-shadow:0px 0px 8px 6px rgba(113, 53, 254, 0.2);
     }
 
@@ -82,12 +82,17 @@
 
   <div class="container mx-auto flex flex-col md:flex-row items-center justify-center gap-8 px-4 custom-height">
     <div class="text-center md:text-left">
-      <h1 class="text-4xl font-bold mb-2 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 via-pink-500 to-blue-500">
+      <h1 class="text-4xl font-bold pb-2 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 via-pink-500 to-blue-500">
         Hello, I'm <%= user.name %>
       </h1>
       <p class="text-lg mb-4"><%= user.oneliner %></p>
       <p class="text-gray-400 max-w-md mx-auto md:mx-0"><%= user.about %></p>
-      <button id="proceedButton" class="mt-5 px-3 py-2 rounded-full text-sm bg-gradient-to-r from-pink-600 via-violet-600 to-blue-600 hover-effect2">Proceed &rightarrow;</button>
+      <div class="homebtn flex gap-2">
+        <a href="/download-resume/<%= user.resume %>" download>
+          <button id="resume" class="mt-5 px-3 py-2 rounded-full text-sm bg-gradient-to-r from-pink-600 via-violet-600 to-blue-600 hover-effect2">Download CV</button>
+        </a>
+        <button id="proceedButton" class="mt-5 px-3 py-2 rounded-full text-sm bg-gradient-to-r from-pink-600 via-violet-600 to-blue-600 hover-effect2">Proceed &rightarrow;</button>
+      </div>
     </div>
     <div class="relative w-48 h-48">
       <!-- Large Circular Border Design (behind the image) -->
@@ -108,9 +113,10 @@
   <!-- Main Content -->
   <main id="main" class="container mx-auto px-40 py-8">
     <!-- Internships -->
-    <section id="internships" class="px-6 py-6 mb-6">
-      <h2 class="text-2xl font-semibold mb-4">Internships</h2>
+    <section id="internships" class="py-6 mb-6">
       <% if (user.internships.length > 0) { %>
+        <h2 class="text-2xl font-semibold mb-4">Internships</h2>
+
         <div class="flex flex-wrap items-center gap-6">
           <% user.internships.forEach(internship => { %>
             <div class="bg-gray-800 rounded-lg overflow-hidden w-72 hover-effect">
@@ -125,8 +131,6 @@
             </div>
           <% }) %>
         </div>
-      <% } else { %>
-        <p class="text-gray-400">No internships listed.</p>
       <% } %>
     </section>
 
@@ -134,13 +138,13 @@
     <div class="border-b border-gray-500 mb-10 pb-5"></div>
 
     <!-- Projects -->
-    <section id="projects" class="px-6 py-6 mb-6 h-auto">
+    <section id="projects" class="mb-6 h-auto">
       <h2 class="text-2xl font-semibold mb-4">Projects</h2>
       <% if (user.projects.length > 0) { %>
         <div class="flex flex-wrap items-center gap-6">
           <% user.projects.forEach(project => { %>
             <div class="bg-gray-800 rounded-lg overflow-hidden w-72 hover-effect">
-              <img src="/images/projects/projectdefault.jpg" alt="<%= project.projectName %>" class="w-full h-40 object-cover">
+              <img src="<%= project.projectpic %>" alt="<%= project.projectName %>" class="w-full h-40 object-cover">
               <div class="p-4">
                 <h3 class="text-xl font-medium mb-2"><%= project.projectName %></h3>
                 <p class="text-sm h-16 overflow-hidden mb-2"><%= project.projectAbout %></p>
@@ -237,7 +241,7 @@
     <div class="peacock flex flex-col justify-center items-center gap-2">
       <div class="modify flex gap-2">
         <a href="edit/<%= user.name %>" class="text-sm font-bold bg-gradient-to-r from-purple-400 via-pink-500 to-blue-500 text-white px-4 py-2 rounded-full hover:opacity-80 transition-opacity duration-300">&#9998; Modify</a>
-        <a href="/customize" class="text-sm font-bold bg-gradient-to-r from-purple-400 via-pink-500 to-blue-500 text-white px-4 py-2 rounded-full">Get Personalized Portfolio 🜲</a>
+        <a href="mailto:<%= 'andashishwill@gmail.com' %>" class="text-sm font-bold bg-gradient-to-r from-purple-400 via-pink-500 to-blue-500 text-white px-4 py-2 rounded-full">Get Personalized Portfolio 🜲</a>
       </div>
       <a href="https://github.com/A-Tetarwal/peacock-project" target="_blank" class="text-sm text-gray-400">Made with Peacock - <%= new Date().getFullYear() %></a>
     </div>

@@ -61,10 +61,12 @@ app.get('/builder', (req, res) => {
   res.render('builder', { formData: req.session.formData });
 });
 
-app.post('/builder', upload.single('image'), async (req, res) => {
+app.post('/builder', upload.any(), async (req, res) => {
   const formData = req.body;
+  const files = req.files;
   console.log('Middleware check: POST /builder');
   console.log('Received formData:', formData);
+  console.log('Received files:', files);
 
   try {
     // Function to create a new user
@@ -84,7 +86,8 @@ app.post('/builder', upload.single('image'), async (req, res) => {
           platforms: [],
           email: formData.email,
           password: formData.password,
-          profilepic: req.file.path.replace('public', '') || 'default.jpg' // Update profile picture path
+          profilepic: files.find(file => file.fieldname === 'profilepic')?.path.replace('public', '') || 'default.jpg',
+          resume: files.find(file => file.fieldname === 'resume')?.filename || 'default.pdf'
         };
 
         // Process technical skills
@@ -106,11 +109,14 @@ app.post('/builder', upload.single('image'), async (req, res) => {
         // Process projects
         let i = 1;
         while (formData[`projectName_${i}`]) {
+          // Find the image for this project
+          const projectImageFile = files.find(file => file.fieldname === `projectpic_${i}`);
           user.projects.push({
             projectName: formData[`projectName_${i}`],
             projectAbout: formData[`projectAbout_${i}`] || '',
             githublink: formData[`githublink_${i}`] || '',
-            demo: formData[`demo_${i}`] || ''
+            demo: formData[`demo_${i}`] || '',
+            projectpic: projectImageFile ? projectImageFile.path.replace('public', '') : 'projectdefault.jpg'
           });
           i++;
         }
@@ -185,12 +191,13 @@ app.get('/portfolio/edit/:name', async (req, res) => {
   res.render('edit', {user})
 })
 
-app.post('/edit/:name', upload.single('image'), async (req, res) => {
+app.post('/edit/:name', upload.any(), async (req, res) => {
   try {
     console.log('Received form data:', req.body);
 
     // Find the user by name
     const user = await userModel.findOne({ name: req.params.name });
+    const files = req.files;
 
     // Check if user exists
     if (!user) {
@@ -222,12 +229,17 @@ app.post('/edit/:name', upload.single('image'), async (req, res) => {
 
     // Update projects
     if (Array.isArray(req.body.projects)) {
-      user.projects = req.body.projects.map(project => ({
-        projectName: project.projectName || '',
-        projectAbout: project.projectAbout || '',
-        githublink: project.githublink || '',
-        demo: project.demo || ''
-      }));
+      user.projects = req.body.projects.map((project, index) => {
+        const projectImageFile = files.find(file => file.fieldname === `projectpic_${index}`);
+        const existingProject = user.projects[index] || {}; // Use existing project if available
+        return {
+          projectName: project.projectName || '',
+          projectAbout: project.projectAbout || '',
+          githublink: project.githublink || '',
+          demo: project.demo || '',
+          projectpic: projectImageFile ? projectImageFile.path.replace('public', '') : existingProject.projectpic
+        };
+      });
     }
 
     // Update internships
@@ -254,11 +266,16 @@ app.post('/edit/:name', upload.single('image'), async (req, res) => {
     // Update password (ensure proper hashing if necessary)
     user.password = req.body.password || user.password;
 
-    // Handle file upload if a new file is provided
-    if (req.file) {
-      user.profilepic = req.file.path.replace('public', ''); // Update profile picture path
-      console.log(user.profilepic);
-    }
+    // Handle file upload if new files are provided
+    files.forEach(file => {
+      if (file.fieldname === 'profilepic') {
+        user.profilepic = file.path.replace('public', ''); // Update profile picture path
+        console.log('Updated profile picture:', user.profilepic);
+      } else if (file.fieldname === 'resume') {
+        user.resume = file.filename; // Update resume filename
+        console.log('Updated resume:', user.resume);
+      }
+    });
        
 
     // Save the updated user
@@ -274,6 +291,17 @@ app.post('/edit/:name', upload.single('image'), async (req, res) => {
   }
 });
 
+// Route to serve the resume file
+app.get('/download-resume/:filename', (req, res) => {
+  const filename = req.params.filename;
+  const resumePath = path.join(__dirname, 'public/documents', filename);
+  res.download(resumePath, (err) => {
+    if (err) {
+      console.error('Error downloading file:', err);
+      res.status(404).send('File not found');
+    }
+  });
+});
 
 app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`);

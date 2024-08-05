@@ -43,7 +43,7 @@
                 <legend class="font-bold text-sm px-1.5 py-1 bg-green-600 rounded-lg">Profile Picture</legend>
                 <div class="profilepic">
                     <label for="image" class="text-sm font-semibold text-white px-1">Profile Picture</label>
-                    <input type="file" name="image" id="image" placeholder="Choose a profile picture" class="outline-none px-4 py-2 text-sm bg-zinc-700 w-full rounded placeholder:text-zinc-300 focus:ring-2 focus:ring-blue-500">    
+                    <input type="file" name="profilepic" id="image" placeholder="Choose a profile picture" class="outline-none px-4 py-2 text-sm bg-zinc-700 w-full rounded placeholder:text-zinc-300 focus:ring-2 focus:ring-blue-500">    
                 </div>
             </fieldset>
             
@@ -129,6 +129,10 @@
             <fieldset class="p-4 rounded text-sm peacock peacockk bg-zinc-800 flex flex-col gap-2">
                 <legend class="font-bold text-sm px-1.5 py-1 bg-green-600 rounded-lg">Project <%= i %>
                 </legend>
+                <div class="projectpic">
+                    <label for="projectpic_<%= i %>" class="text-sm font-semibold text-white px-1">Project Picture</label>
+                    <input type="file" name="projectpic_<%= i %>" id="projectpic_<%= i %>" placeholder="Choose a project image" class="outline-none px-4 py-2 text-sm bg-zinc-700 w-full rounded placeholder:text-zinc-300 focus:ring-2 focus:ring-blue-500">    
+                </div>
                 <div class="flex items-center gap-2">
                     <label for="projectName_<%= i %>" class="text-sm">Name</label>
                     <input type="text" id="projectName_<%= i %>" name="projectName_<%= i %>"
@@ -200,6 +204,17 @@
                 </fieldset>
             <% }); %>
         <% } %>
+
+        <!-- gap -->
+        <div class="border-b border-zinc-800 mb-5 pb-5"></div>
+
+        <fieldset class="p-4 rounded text-sm peacock peacockk bg-zinc-800">
+            <legend class="font-bold text-sm px-1.5 py-1 bg-green-600 rounded-lg">CV</legend>
+            <div class="profilepic">
+                <label for="resume" class="text-sm font-semibold text-white px-1">Resmue/CV</label>
+                <input type="file" name="resume" id="resume" placeholder="Add Resume" class="outline-none px-4 py-2 text-sm bg-zinc-700 w-full rounded placeholder:text-zinc-300 focus:ring-2 focus:ring-blue-500">    
+            </div>
+        </fieldset>
 
         <!-- gap -->
         <div class="border-b border-zinc-800 mb-5 pb-5"></div>

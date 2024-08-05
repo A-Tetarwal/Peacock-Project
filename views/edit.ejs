@@ -137,6 +137,11 @@
         </legend>
         <% user.projects.forEach((project, index) => { %>
             <div class="flex items-center gap-2">
+                <div class="projectpic">
+                    <label for="projectpic_<%= index %>" class="text-sm font-semibold text-white px-1">Project Picture</label>
+                    <input type="file" name="projectpic_<%= index %>" id="projectpic_<%= index %>" placeholder="Choose a project image" class="outline-none px-4 py-2 text-sm bg-zinc-700 w-full rounded placeholder:text-zinc-300 focus:ring-2 focus:ring-blue-500">    
+                  </div>
+                  
                 <label for="projects[<%= index %>][projectName]" class="text-sm">Name</label>
                 <input type="text" id="projectName" name="projects[<%= index %>][projectName]" value="<%= project.projectName %>"
                     placeholder="Enter project name"
@@ -227,6 +232,17 @@
         <!-- gap -->
         <div class="border-b border-zinc-800 mb-5 pb-5"></div>
 
+        <fieldset class="p-4 rounded text-sm peacock peacockk bg-zinc-800">
+            <legend class="font-bold text-sm px-1.5 py-1 bg-green-600 rounded-lg">CV</legend>
+            <div class="profilepic">
+                <label for="resume" class="text-sm font-semibold text-white px-1">Resmue/CV</label>
+                <input type="file" name="resume" id="resume" placeholder="Add Resume" class="outline-none px-4 py-2 text-sm bg-zinc-700 w-full rounded placeholder:text-zinc-300 focus:ring-2 focus:ring-blue-500">    
+            </div>
+        </fieldset>
+
+        <!-- gap -->
+        <div class="border-b border-zinc-800 mb-5 pb-5"></div>
+
         <fieldset class="p-4 rounded text-sm peacock peacockk bg-zinc-800 flex flex-col gap-2">
             <legend class="font-bold text-sm px-1.5 py-1 bg-green-600 rounded-lg">Contact</legend>
             <div class="flex items-center gap-2">
@@ -299,6 +315,10 @@
             const div = document.createElement('div');
             div.className = 'flex items-center gap-2';
             div.innerHTML = `
+                <div class="projectpic">
+                    <label for="projectpic_${count}" class="text-sm font-semibold text-white px-1">Project Picture</label>
+                    <input type="file" name="projectpic_${count}" id="projectpic_${count}" placeholder="Choose a project image" class="outline-none px-4 py-2 text-sm bg-zinc-700 w-full rounded placeholder:text-zinc-300 focus:ring-2 focus:ring-blue-500">    
+                </div>
                 <label for="projects[${count}][projectName]" class="text-sm">Name</label>
                 <input type="text" id="projectName" name="projects[${count}][projectName]" placeholder="Enter project name"
                     class="w-72 bg-zinc-700 text-gray-400 px-3 py-2 border border-zinc-600 rounded-lg focus:outline-none focus:border-zinc-400">
