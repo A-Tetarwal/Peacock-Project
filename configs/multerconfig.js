@@ -7,7 +7,7 @@ const storage = multer.diskStorage({
     destination: function (req, file, cb) {
         // Check the fieldname to decide the folder
         let folder = '';
-        if (/^projectpic_\d+$/.test(file.fieldname)) {
+        if (file.fieldname.startsWith('projectpic_')) {
             folder = './public/images/projects';
         } else if (file.fieldname === 'profilepic') {
             folder = './public/images/uploads';

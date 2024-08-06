@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const { type } = require('os');
 
 // mongoose.connect(`mongodb://127.0.0.1:27017/Peacock`);
 // Connect to MongoDB Atlas
@@ -9,8 +8,9 @@ const { type } = require('os');
 //     console.error('Error connecting to MongoDB Atlas:', err.message);
 // });
 
-mongoose.connect('mongodb+srv://andashishwill:QQEoVJXrlzlXZ5tj@peacock-project.qxukkft.mongodb.net/?retryWrites=true&w=majority&appName=Peacock-Project'
-).then(() => {
+mongoose.connect('mongodb+srv://andashishwill:QQEoVJXrlzlXZ5tj@peacock-project.qxukkft.mongodb.net/?retryWrites=true&w=majority&appName=Peacock-Project', {
+  serverSelectionTimeoutMS: 30000, // Increase timeout to 30 seconds
+}).then(() => {
   console.log('Connected to MongoDB Atlas');
 }).catch(err => {
   console.error('Error connecting to MongoDB Atlas:', err.message);
